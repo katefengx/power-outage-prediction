@@ -4,4 +4,4 @@ source "https://rubygems.org"
 
 gem "minima"
 
-gem "jekyll", "~> 4.4"
+gem "github-pages", group: :jekyll_plugins

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Power Outage Prediction | power-outage-prediction</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Power Outage Prediction" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="power-outage-prediction" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Power Outage Prediction" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","headline":"Power Outage Prediction","name":"power-outage-prediction","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="power-outage-prediction" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">power-outage-prediction</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/">Power Outage Prediction</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home"><h1 class="page-heading">Power Outage Prediction</h1><h1 id="power-outage-prediction">Power Outage Prediction</h1>
+<p>by Kate Feng and Tracy Vu</p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>This project examines the regional impact on the severity of power outages in the United States. In particular, we are investigating: <strong>Do power outages last longer in the Northeast Midwest region compared to other regions of the U.S.?</strong> The dataset we are using is Purdue University’s Major Power Outage Risks in the U.S. dataset, which consists of major power outages, defined by the Department of Energy as those affecting over 50,000 customers or resulting in a loss of over 300 megawatts of energy. The data spans from January 2000 to July 2016 across the United States. Each of the 1,534 rows represents a single power outage occurrence, with 57 total columns containing information such as the duration of the outage, the state and region in which it occurred, and the category of the outage’s cause.</p>
+
+<p>The columns we included in our analysis are:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">'YEAR'</code> - This column labels the year that the power outage occurred.</li>
+  <li><code class="language-plaintext highlighter-rouge">'MONTH'</code> - This column labels the month that the power outage occurred.</li>
+  <li><code class="language-plaintext highlighter-rouge">'U.S._STATE'</code> - This column labels the state that the power outage was located. Column renamed to <code class="language-plaintext highlighter-rouge">'STATE'</code> for readability.</li>
+  <li><code class="language-plaintext highlighter-rouge">'POSTAL.CODE'</code> - This column labels the abbreviation for the state the power outage was located. Column renamed to <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code> for readability.</li>
+  <li><code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code> - This column categorizes the region where the outage occurred. The possible values include:
+    <ul>
+      <li>East North Central (Northeast Midwest)</li>
+      <li>Central</li>
+      <li>Northeast</li>
+      <li>Northwest</li>
+      <li>South</li>
+      <li>Southeast</li>
+      <li>Southwest</li>
+      <li>West</li>
+      <li>West North Central</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code> - This column categorizes the climate of the region where the outage occurred. The possible values include:
+    <ul>
+      <li>Normal</li>
+      <li>Cold</li>
+      <li>Warm</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code> - This column categorizes the overall cause of the outage. The possible values include:
+    <ul>
+      <li>Equipment failure</li>
+      <li>Severe weather</li>
+      <li>Public appeal</li>
+      <li>Intentional attack</li>
+      <li>Fuel supply emergency</li>
+      <li>Islanding</li>
+      <li>System operability</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> - This column represents the length of time (in minutes) that an outage persisted, providing a quantitative measure of outage severity.</li>
+  <li><code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> - This column represents the number of customers affected by the outage.</li>
+  <li><code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> - This column represents the amount of energy (in megawatts) that the customers affected by the outage demanded during the duration of the outage. This column, as well as the <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> column, provide an examination into whether public pressure affects the speed of outage repair.</li>
+</ul>
+
+<h1 id="data-cleaning-and-exploratory-data-analysis">Data Cleaning and Exploratory Data Analysis</h1>
+
+<h2 id="data-cleaning">Data Cleaning</h2>
+<p>In order to effectively analyze our dataset, we must first clean it. To do this, we first dropped columns that we knew we wouldn’t be using.
+The dropped columns include: <code class="language-plaintext highlighter-rouge">"OBS"</code>, <code class="language-plaintext highlighter-rouge">"variables"</code>, <code class="language-plaintext highlighter-rouge">"RES.PRICE</code>”, <code class="language-plaintext highlighter-rouge">"COM.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"IND.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"RES.SALES"</code>, <code class="language-plaintext highlighter-rouge">"COM.SALES"</code>, <code class="language-plaintext highlighter-rouge">"IND.SALES"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.SALES"</code>, <code class="language-plaintext highlighter-rouge">"RES.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"COM.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"IND.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.STATE"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.USA"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.REL"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.CHANGE"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.CONTRI"</code>, <code class="language-plaintext highlighter-rouge">"PI.UTIL.OFUSA"</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_RURAL'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'PCT_LAND'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_TOT'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_INLAND'</code>, <code class="language-plaintext highlighter-rouge">'ANOMALY.LEVEL'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.TIME'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.TIME'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY.DETAIL'</code>, <code class="language-plaintext highlighter-rouge">'HURRICANE.NAMES'</code>, <code class="language-plaintext highlighter-rouge">'POPULATION'</code>.</p>
+
+<p>We converted the <code class="language-plaintext highlighter-rouge">'MONTH'</code> column from numerical values to text values and renamed columns (<code class="language-plaintext highlighter-rouge">'U.S._STATE'</code> to <code class="language-plaintext highlighter-rouge">'STATE'</code>, <code class="language-plaintext highlighter-rouge">'POSTAL.CODE'</code> to <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>) for readability.</p>
+
+<h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
+
+<h3 id="univariate-analysis-outage-duration-histogram-and-chloropleth-map">Univariate Analysis: Outage Duration Histogram and Chloropleth Map</h3>
+<p>For our first univariate plot, we created a histogram to show the distribution of power outage durations. To further clean our <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> data, we removed rows containing <code class="language-plaintext highlighter-rouge">'np.nan'</code> values, excluded the max value (extreme outlier), then calculated our standard deviation. We used the SD to further exclude outliers—values beyond three standard deviations from the mean—for a clearer visual representation. We found that outages between 0 and 499 minutes dominate the distribution, with a 0.47 probability.</p>
+<iframe src="assets/duration_histogram.html" width="800" height="400" frameborder="0"></iframe>
+
+<p>We also examined how the number of power outages varied by state. To visualize this, we created a choropleth map showing the distribution of power outages across different states. We grouped the data by <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>, counted the number of rows per group, and added labels for the number of outages in states with over 50 outages. The major states here included California with 210 outages, Texas with 127 outages, and Washington with 97 outages over the 15.5 years of data.</p>
+<iframe src="assets/outages_map.html" width="800" height="400" frameborder="0"></iframe>
+
+<h3 id="bivariate-analysis-outage-duration-against-region-and-year">Bivariate Analysis: Outage Duration Against Region and Year</h3>
+<p>We wanted to know if there was a relationship between the region where the outage occurred, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, and its duration, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. To find out, we calculated the average duration per region and plotted it on a bar chart against the region name. Outage durations peaked in the East North Central region, with an average duration of 5,352 minutes, which was well above the average outage durations of the other regions, which peaked at around 3,000 minutes.</p>
+<iframe src="assets/bar_region.html" width="800" height="400" frameborder="0"></iframe>
+
+<p>We also wanted to find out if there was a relationship between the <code class="language-plaintext highlighter-rouge">'YEAR'</code> and <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> columns, to see if there was a correlation between the year and the length of power outages. We found that there is a negative relationship between year and outage duration, with the number of major outages peaking in 2005 before slowly decreasing.</p>
+<iframe src="assets/line_year.html" width="800" height="400" frameborder="0"></iframe>
+
+<h1 id="assessment-of-missingness">Assessment of Missingness</h1>
+
+<h2 id="nmar-analysis">NMAR Analysis</h2>
+<h2 id="missingness-dependency">Missingness Dependency</h2>
+
+<h1 id="hypothesis-testing">Hypothesis Testing</h1>
+
+<h1 id="framing-a-prediction-problem">Framing a Prediction Problem</h1>
+
+<h1 id="baseline-model">Baseline Model</h1>
+
+<h1 id="final-model">Final Model</h1>
+
+<h1 id="fairness-analysis">Fairness Analysis</h1>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">power-outage-prediction</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">power-outage-prediction</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
