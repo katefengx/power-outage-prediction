@@ -39,7 +39,9 @@
 
 <h1 id="introduction">Introduction</h1>
 
-<p>This project examines the regional impact on the severity of power outages in the United States. In particular, we are investigating: <strong>Do power outages last longer in the Northeast Midwest region compared to other regions of the U.S.?</strong> The dataset we are using is Purdue University’s Major Power Outage Risks in the U.S. dataset, which consists of major power outages, defined by the Department of Energy as those affecting over 50,000 customers or resulting in a loss of over 300 megawatts of energy. The data spans from January 2000 to July 2016 across the United States. Each of the 1,534 rows represents a single power outage occurrence, with 57 total columns containing information such as the duration of the outage, the state and region in which it occurred, and the category of the outage’s cause.</p>
+<p>This project explores how power outage data can be leveraged to predict the number of affected customers during an outage across different regions in the United States. In particular, we are investigating: <strong>How can we predict the number of affected customers based on factors like outage duration, region, and cause?</strong></p>
+
+<p>The dataset we are using is Purdue University’s Major Power Outage Risks in the U.S. dataset, which consists of major power outages, defined by the Department of Energy as those affecting over 50,000 customers or resulting in a loss of over 300 megawatts of energy. The data spans from January 2000 to July 2016 across the United States. Each of the 1,534 rows represents a single power outage occurrence, with 57 total columns containing information such as the duration of the outage, the state and region in which it occurred, and the category of the outage’s cause.</p>
 
 <p>The columns we included in our analysis are:</p>
 <ul>
@@ -78,43 +80,443 @@
       <li>System operability</li>
     </ul>
   </li>
+  <li><code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY.DETAIL'</code> - This column gives some additional details to the categories causing the major power outage.</li>
   <li><code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> - This column represents the length of time (in minutes) that an outage persisted, providing a quantitative measure of outage severity.</li>
   <li><code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> - This column represents the number of customers affected by the outage.</li>
   <li><code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> - This column represents the amount of energy (in megawatts) that the customers affected by the outage demanded during the duration of the outage. This column, as well as the <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> column, provide an examination into whether public pressure affects the speed of outage repair.</li>
+  <li><code class="language-plaintext highlighter-rouge">'POPDEN_URBAN'</code> - This column represents the persons per square mile (population density) in the urban areas.</li>
+  <li><code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>- This column represents the total megawatts of electricity consumed per hour in the respective state.</li>
+  <li><code class="language-plaintext highlighter-rouge">'TOTAL.CUSTOMERS'</code> - This column represents the annual total number of customers served in the state the outage occurred in.</li>
+  <li><code class="language-plaintext highlighter-rouge">'POPULATION'</code> - This column represents the yearly population of the state the outage occurred in.</li>
 </ul>
 
 <h1 id="data-cleaning-and-exploratory-data-analysis">Data Cleaning and Exploratory Data Analysis</h1>
 
 <h2 id="data-cleaning">Data Cleaning</h2>
 <p>In order to effectively analyze our dataset, we must first clean it. To do this, we first dropped columns that we knew we wouldn’t be using.
-The dropped columns include: <code class="language-plaintext highlighter-rouge">"OBS"</code>, <code class="language-plaintext highlighter-rouge">"variables"</code>, <code class="language-plaintext highlighter-rouge">"RES.PRICE</code>”, <code class="language-plaintext highlighter-rouge">"COM.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"IND.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"RES.SALES"</code>, <code class="language-plaintext highlighter-rouge">"COM.SALES"</code>, <code class="language-plaintext highlighter-rouge">"IND.SALES"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.SALES"</code>, <code class="language-plaintext highlighter-rouge">"RES.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"COM.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"IND.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.STATE"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.USA"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.REL"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.CHANGE"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.CONTRI"</code>, <code class="language-plaintext highlighter-rouge">"PI.UTIL.OFUSA"</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_RURAL'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'PCT_LAND'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_TOT'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_INLAND'</code>, <code class="language-plaintext highlighter-rouge">'ANOMALY.LEVEL'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.TIME'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.TIME'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY.DETAIL'</code>, <code class="language-plaintext highlighter-rouge">'HURRICANE.NAMES'</code>, <code class="language-plaintext highlighter-rouge">'POPULATION'</code>.</p>
+The dropped columns include: <code class="language-plaintext highlighter-rouge">"OBS"</code>, <code class="language-plaintext highlighter-rouge">"variables"</code>, <code class="language-plaintext highlighter-rouge">"RES.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"COM.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"IND.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"RES.SALES"</code>, <code class="language-plaintext highlighter-rouge">"COM.SALES"</code>, <code class="language-plaintext highlighter-rouge">"IND.SALES"</code>, <code class="language-plaintext highlighter-rouge">"RES.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"COM.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"IND.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.STATE"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.USA"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.REL"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.CHANGE"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.CONTRI"</code>, <code class="language-plaintext highlighter-rouge">"PI.UTIL.OFUSA"</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_RURAL'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'PCT_LAND'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_TOT'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_INLAND'</code>, <code class="language-plaintext highlighter-rouge">'ANOMALY.LEVEL'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.TIME'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.TIME'</code>, <code class="language-plaintext highlighter-rouge">'HURRICANE.NAMES'</code>, <code class="language-plaintext highlighter-rouge">'NERC.REGION'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_URBAN'</code>.</p>
 
-<p>We converted the <code class="language-plaintext highlighter-rouge">'MONTH'</code> column from numerical values to text values and renamed columns (<code class="language-plaintext highlighter-rouge">'U.S._STATE'</code> to <code class="language-plaintext highlighter-rouge">'STATE'</code>, <code class="language-plaintext highlighter-rouge">'POSTAL.CODE'</code> to <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>) for readability.</p>
+<p>We converted the <code class="language-plaintext highlighter-rouge">'MONTH'</code> column from numerical values to text values and renamed columns (<code class="language-plaintext highlighter-rouge">'U.S._STATE'</code> to <code class="language-plaintext highlighter-rouge">'STATE'</code>, <code class="language-plaintext highlighter-rouge">'POSTAL.CODE'</code> to <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>) for readability. Furthermore, in order to predict the size of the customer base affected, we created another column called <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code> with lables based off of <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> with these bins:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Bin Range (Customers Affected)</strong></th>
+      <th><strong>Label</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0 - 10,000</td>
+      <td>Small Customer Base</td>
+    </tr>
+    <tr>
+      <td>10,000 - 100,000</td>
+      <td>Medium Customer Base</td>
+    </tr>
+    <tr>
+      <td>100,000 - 500,000</td>
+      <td>Large Customer Base</td>
+    </tr>
+    <tr>
+      <td>500,000+</td>
+      <td>Very Large Customer Base</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Below are a sample of rows from our cleaned dataset.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">YEAR</th>
+      <th style="text-align: left">MONTH</th>
+      <th style="text-align: left">STATE</th>
+      <th style="text-align: left">STATE.ABBV</th>
+      <th style="text-align: left">CLIMATE.REGION</th>
+      <th style="text-align: left">CLIMATE.CATEGORY</th>
+      <th style="text-align: left">CAUSE.CATEGORY</th>
+      <th style="text-align: left">CAUSE.CATEGORY.DETAIL</th>
+      <th>OUTAGE.DURATION</th>
+      <th>DEMAND.LOSS.MW</th>
+      <th>CUSTOMERS.AFFECTED</th>
+      <th>TOTAL.SALES</th>
+      <th>TOTAL.CUSTOMERS</th>
+      <th>POPULATION</th>
+      <th>POPDEN_URBAN</th>
+      <th>AFFECTED_BUCKET</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">766</td>
+      <td style="text-align: left">2000.0</td>
+      <td style="text-align: left">NaN</td>
+      <td style="text-align: left">North Carolina</td>
+      <td style="text-align: left">NC</td>
+      <td style="text-align: left">Southeast</td>
+      <td style="text-align: left">NaN</td>
+      <td style="text-align: left">severe weather</td>
+      <td>thunderstorm</td>
+      <td>NaN</td>
+      <td>5.00e+04</td>
+      <td>NaN</td>
+      <td>4.11e+06</td>
+      <td>8.08e+06</td>
+      <td>1367.2</td>
+      <td>Medium Customer Base</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">1049</td>
+      <td style="text-align: left">2008.0</td>
+      <td style="text-align: left">February</td>
+      <td style="text-align: left">Florida</td>
+      <td style="text-align: left">FL</td>
+      <td style="text-align: left">Southeast</td>
+      <td style="text-align: left">cold</td>
+      <td style="text-align: left">system operability disruption</td>
+      <td>NaN</td>
+      <td>91</td>
+      <td>318</td>
+      <td>5.40e+04</td>
+      <td>16515248</td>
+      <td>9.63e+06</td>
+      <td>1.85e+07</td>
+      <td>Medium Customer Base</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">575</td>
+      <td style="text-align: left">2005.0</td>
+      <td style="text-align: left">July</td>
+      <td style="text-align: left">Maryland</td>
+      <td style="text-align: left">MD</td>
+      <td style="text-align: left">Northeast</td>
+      <td style="text-align: left">normal</td>
+      <td style="text-align: left">severe weather</td>
+      <td>thunderstorm</td>
+      <td>4517</td>
+      <td>NaN</td>
+      <td>6.49e+04</td>
+      <td>6782930</td>
+      <td>2.36e+06</td>
+      <td>5.59e+06</td>
+      <td>Medium Customer Base</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">331</td>
+      <td style="text-align: left">2010.0</td>
+      <td style="text-align: left">June</td>
+      <td style="text-align: left">Indiana</td>
+      <td style="text-align: left">IN</td>
+      <td style="text-align: left">Central</td>
+      <td style="text-align: left">normal</td>
+      <td style="text-align: left">severe weather</td>
+      <td>thunderstorm</td>
+      <td>513</td>
+      <td>NaN</td>
+      <td>5.30e+04</td>
+      <td>9121925</td>
+      <td>3.10e+06</td>
+      <td>6.49e+06</td>
+      <td>Medium Customer Base</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">705</td>
+      <td style="text-align: left">2003.0</td>
+      <td style="text-align: left">August</td>
+      <td style="text-align: left">Ohio</td>
+      <td style="text-align: left">OH</td>
+      <td style="text-align: left">Central</td>
+      <td style="text-align: left">normal</td>
+      <td style="text-align: left">system operability disruption</td>
+      <td>NaN</td>
+      <td>3137</td>
+      <td>7000</td>
+      <td>1.20e+06</td>
+      <td>14199635</td>
+      <td>5.40e+06</td>
+      <td>1.14e+07</td>
+      <td>Very Large Customer Base</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
 
-<h3 id="univariate-analysis-outage-duration-histogram-and-chloropleth-map">Univariate Analysis: Outage Duration Histogram and Chloropleth Map</h3>
-<p>For our first univariate plot, we created a histogram to show the distribution of power outage durations. To further clean our <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> data, we removed rows containing <code class="language-plaintext highlighter-rouge">'np.nan'</code> values, excluded the max value (extreme outlier), then calculated our standard deviation. We used the SD to further exclude outliers—values beyond three standard deviations from the mean—for a clearer visual representation. We found that outages between 0 and 499 minutes dominate the distribution, with a 0.47 probability.</p>
-<iframe src="assets/duration_histogram.html" width="800" height="400" frameborder="0"></iframe>
+<h3 id="univariate-analysis-customer-base-size-histogram-and-chloropleth-map">Univariate Analysis: <strong>Customer Base Size Histogram and Chloropleth Map</strong></h3>
+<p>For our first univariate plot, we created a histogram to show the distribution of the customer base sizes. We found that most outages affected a medium to large customer base, with 371 outages affecting 10,000 to 100,000 customers and 385 outages affecting 100,000 to 500,000 customers.</p>
+<iframe src="assets/affected_hist.html" width="800" height="420" frameborder="0"></iframe>
 
 <p>We also examined how the number of power outages varied by state. To visualize this, we created a choropleth map showing the distribution of power outages across different states. We grouped the data by <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>, counted the number of rows per group, and added labels for the number of outages in states with over 50 outages. The major states here included California with 210 outages, Texas with 127 outages, and Washington with 97 outages over the 15.5 years of data.</p>
-<iframe src="assets/outages_map.html" width="800" height="400" frameborder="0"></iframe>
+<iframe src="assets/outages_map.html" width="800" height="420" frameborder="0"></iframe>
 
-<h3 id="bivariate-analysis-outage-duration-against-region-and-year">Bivariate Analysis: Outage Duration Against Region and Year</h3>
-<p>We wanted to know if there was a relationship between the region where the outage occurred, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, and its duration, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. To find out, we calculated the average duration per region and plotted it on a bar chart against the region name. Outage durations peaked in the East North Central region, with an average duration of 5,352 minutes, which was well above the average outage durations of the other regions, which peaked at around 3,000 minutes.</p>
-<iframe src="assets/bar_region.html" width="800" height="400" frameborder="0"></iframe>
+<h3 id="bivariate-analysis-customer-base-vs-electricity-use-and-duration-over-time">Bivariate Analysis: <strong>Customer Base vs. Electricity Use and Duration Over Time</strong></h3>
+<p>We wanted to know if there was a relationship between the customer base categories <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code>, and its total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>. To explore this, we calculated the average total electricity consumption for each customer base category and visualized it using a bar chart. Outage electricity consumption grew as the customer base size increased, which was expected. The average total electricity consumption across outages serving a “Very Large Customer Base” was around 16.5MWh compared to around 9.8MWh for the “Small Customer Base”</p>
+<iframe src="assets/bar_region.html" width="800" height="420" frameborder="0"></iframe>
 
-<p>We also wanted to find out if there was a relationship between the <code class="language-plaintext highlighter-rouge">'YEAR'</code> and <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> columns, to see if there was a correlation between the year and the length of power outages. We found that there is a negative relationship between year and outage duration, with the number of major outages peaking in 2005 before slowly decreasing.</p>
-<iframe src="assets/line_year.html" width="800" height="400" frameborder="0"></iframe>
+<p>We also wanted to find out if there was a relationship between the <code class="language-plaintext highlighter-rouge">'YEAR'</code> and <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> columns, to see if there was a correlation between the year and the average duration of power outages. We found that there is a negative relationship between year and energy consumption, with the number of major outages peaking in 2005 before slowly decreasing.</p>
+<iframe src="assets/line_year.html" width="800" height="420" frameborder="0"></iframe>
+
+<h2 id="interesting-aggregates">Interesting Aggregates</h2>
+<p>To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, <code class="language-plaintext highlighter-rouge">CLIMATE.REGION</code>, and used the <code class="language-plaintext highlighter-rouge">mean()</code> function to determine the average <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code> across the months. This allowed us to identify patterns in energy consumption based on climate regions over time.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">CLIMATE.REGION</th>
+      <th style="text-align: right">January</th>
+      <th style="text-align: right">February</th>
+      <th style="text-align: right">March</th>
+      <th style="text-align: right">April</th>
+      <th style="text-align: right">May</th>
+      <th style="text-align: right">June</th>
+      <th style="text-align: right">July</th>
+      <th style="text-align: right">August</th>
+      <th style="text-align: right">September</th>
+      <th style="text-align: right">October</th>
+      <th style="text-align: right">November</th>
+      <th style="text-align: right">December</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Central</td>
+      <td style="text-align: right">9999134.88</td>
+      <td style="text-align: right">9704433.5</td>
+      <td style="text-align: right">8803031.0</td>
+      <td style="text-align: right">8296968.53</td>
+      <td style="text-align: right">8610485.55</td>
+      <td style="text-align: right">10035573.94</td>
+      <td style="text-align: right">12987285.21</td>
+      <td style="text-align: right">12126452.0</td>
+      <td style="text-align: right">10827517.43</td>
+      <td style="text-align: right">9321714.12</td>
+      <td style="text-align: right">8800424.8</td>
+      <td style="text-align: right">9975352.22</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">East North Central</td>
+      <td style="text-align: right">7115169.25</td>
+      <td style="text-align: right">6362546.8</td>
+      <td style="text-align: right">6440860.5</td>
+      <td style="text-align: right">6914944.64</td>
+      <td style="text-align: right">7823724.9</td>
+      <td style="text-align: right">7681555.95</td>
+      <td style="text-align: right">9408858.55</td>
+      <td style="text-align: right">8709003.54</td>
+      <td style="text-align: right">8017706.78</td>
+      <td style="text-align: right">7431004.14</td>
+      <td style="text-align: right">7656789.67</td>
+      <td style="text-align: right">8894578.7</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Northeast</td>
+      <td style="text-align: right">6633505.48</td>
+      <td style="text-align: right">7301159.0</td>
+      <td style="text-align: right">5800729.46</td>
+      <td style="text-align: right">2866264.26</td>
+      <td style="text-align: right">5711189.12</td>
+      <td style="text-align: right">6769895.62</td>
+      <td style="text-align: right">8426713.92</td>
+      <td style="text-align: right">9024923.71</td>
+      <td style="text-align: right">7462276.09</td>
+      <td style="text-align: right">6897058.72</td>
+      <td style="text-align: right">3261755.5</td>
+      <td style="text-align: right">7670454.57</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Northwest</td>
+      <td style="text-align: right">7440878.07</td>
+      <td style="text-align: right">6698315.31</td>
+      <td style="text-align: right">6297616.08</td>
+      <td style="text-align: right">7013575.4</td>
+      <td style="text-align: right">6016778.71</td>
+      <td style="text-align: right">5466119.36</td>
+      <td style="text-align: right">7277678.33</td>
+      <td style="text-align: right">6321413.79</td>
+      <td style="text-align: right">6469954.43</td>
+      <td style="text-align: right">6061274.0</td>
+      <td style="text-align: right">7188666.57</td>
+      <td style="text-align: right">7085207.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">South</td>
+      <td style="text-align: right">16044959.81</td>
+      <td style="text-align: right">23281753.27</td>
+      <td style="text-align: right">21709001.46</td>
+      <td style="text-align: right">19045943.3</td>
+      <td style="text-align: right">15341953.13</td>
+      <td style="text-align: right">20628203.52</td>
+      <td style="text-align: right">22035386.1</td>
+      <td style="text-align: right">20993897.56</td>
+      <td style="text-align: right">22508896.89</td>
+      <td style="text-align: right">17128871.44</td>
+      <td style="text-align: right">14301226.0</td>
+      <td style="text-align: right">14798184.21</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Southeast</td>
+      <td style="text-align: right">11478360.27</td>
+      <td style="text-align: right">11885612.56</td>
+      <td style="text-align: right">11779881.22</td>
+      <td style="text-align: right">11096123.0</td>
+      <td style="text-align: right">11940065.4</td>
+      <td style="text-align: right">11730216.44</td>
+      <td style="text-align: right">11820852.62</td>
+      <td style="text-align: right">16842852.41</td>
+      <td style="text-align: right">15557131.0</td>
+      <td style="text-align: right">15695574.0</td>
+      <td style="text-align: right">8904418.33</td>
+      <td style="text-align: right">10545208.33</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Southwest</td>
+      <td style="text-align: right">3759643.0</td>
+      <td style="text-align: right">3374356.93</td>
+      <td style="text-align: right">2951417.83</td>
+      <td style="text-align: right">2976632.44</td>
+      <td style="text-align: right">3276493.33</td>
+      <td style="text-align: right">5019965.11</td>
+      <td style="text-align: right">5089792.33</td>
+      <td style="text-align: right">4101329.0</td>
+      <td style="text-align: right">2492126.0</td>
+      <td style="text-align: right">3672241.25</td>
+      <td style="text-align: right">2226672.0</td>
+      <td style="text-align: right">4280192.57</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">West</td>
+      <td style="text-align: right">18323967.46</td>
+      <td style="text-align: right">18861674.5</td>
+      <td style="text-align: right">19788192.33</td>
+      <td style="text-align: right">19451781.43</td>
+      <td style="text-align: right">19400558.89</td>
+      <td style="text-align: right">21078384.76</td>
+      <td style="text-align: right">24839961.07</td>
+      <td style="text-align: right">25358698.5</td>
+      <td style="text-align: right">24603592.5</td>
+      <td style="text-align: right">21710812.95</td>
+      <td style="text-align: right">19410953.92</td>
+      <td style="text-align: right">20674018.24</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">West North Central</td>
+      <td style="text-align: right">NaN</td>
+      <td style="text-align: right">NaN</td>
+      <td style="text-align: right">1242527.0</td>
+      <td style="text-align: right">NaN</td>
+      <td style="text-align: right">1433063.0</td>
+      <td style="text-align: right">1592024.4</td>
+      <td style="text-align: right">NaN</td>
+      <td style="text-align: right">1563340.75</td>
+      <td style="text-align: right">NaN</td>
+      <td style="text-align: right">1416356.0</td>
+      <td style="text-align: right">1490885.5</td>
+      <td style="text-align: right">1798136.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Similar to the pivot table above, we also wanted to investigate energy consumption patterns across different temperatures, <code class="language-plaintext highlighter-rouge">CLIMATE.CATEGORY</code>, for each state. We applied the mean() aggregate function to <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code>. Below are the first few rows of the table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">STATE</th>
+      <th style="text-align: right">cold</th>
+      <th style="text-align: right">normal</th>
+      <th style="text-align: right">warm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Alabama</td>
+      <td style="text-align: right">7647656.0</td>
+      <td style="text-align: right">7193314.5</td>
+      <td style="text-align: right">8934377.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Arizona</td>
+      <td style="text-align: right">5425664.57</td>
+      <td style="text-align: right">6438748.0</td>
+      <td style="text-align: right">5547223.57</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Arkansas</td>
+      <td style="text-align: right">3880604.86</td>
+      <td style="text-align: right">4163933.6</td>
+      <td style="text-align: right">3706199.33</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">California</td>
+      <td style="text-align: right">21693834.79</td>
+      <td style="text-align: right">22031934.17</td>
+      <td style="text-align: right">21332614.62</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Colorado</td>
+      <td style="text-align: right">4030931.67</td>
+      <td style="text-align: right">4421043.75</td>
+      <td style="text-align: right">4289402.0</td>
+    </tr>
+  </tbody>
+</table>
 
 <h1 id="assessment-of-missingness">Assessment of Missingness</h1>
-
 <h2 id="nmar-analysis">NMAR Analysis</h2>
+<p>The column <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY.DETAIL'</code> is likely to be NMAR because its missingness does not depend on other columns. For example, rows that had severe weather in ‘CAUSE.CATEGORY’ had both missing and non-missing data in <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY.DETAIL'</code>, so it is not dependent on other columns.</p>
+
+<p>To make this column MAR, we would need to visit external databases to see if some utility companies provide <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY.DETAIL'</code> more consistently than others.</p>
+
 <h2 id="missingness-dependency">Missingness Dependency</h2>
+<p>There are various columns where there is missing data. We wanted to find out if the total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, is dependent on the missingness in the electricity demand loss column, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>.</p>
+
+<iframe src="assets/sales_missing.html" width="800" height="420" frameborder="0"></iframe>
+
+<p>Our set of hypotheses were:</p>
+
+<p><strong>Null Hypothesis:</strong> The missingness of the data in the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column does not depend on the total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>.</p>
+
+<p><strong>Alternative Hypothesis:</strong> The missingness of the data in the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column does depend on the total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>.</p>
+
+<p>Our test statistic was the difference in means between average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> for data without missing <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> and the average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> for data with missing <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>. We got a low p-value of 0.001, which is below the standard 0.05 significance threshold. We obtained a low p-value of 0.001, which is below the standard 0.05 significance threshold. Therefore, we reject the null hypothesis and conclude that the missingness of <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> is dependent on <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>: when <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> is lower, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> is more likely to be missing. This dependency is possibly due to reporting bias, where locations with less electricity consumption do not have record of the demand loss because it is seen as less impactful.</p>
+
+<iframe src="assets/dependent_hist.html" width="800" height="420" frameborder="0"></iframe>
+
+<p>Next, we wanted to see if the missingness of the electricity demand loss column, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>, depended on the duration of the power outage, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. Our set of hypotheses were:</p>
+
+<p><strong>Null Hypothesis:</strong> The missingness of the data in the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column does not depend on the length of the power outage, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>.</p>
+
+<p><strong>Alternative Hypothesis:</strong> The missingness of the data in the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column does depend on the length of the power outage, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>.</p>
+
+<iframe src="assets/duration_missing.html" width="800" height="420" frameborder="0"></iframe>
+
+<p>We performed a permutation test by shuffling the “Missing/Not Missing” labels for the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column, and calculated the difference in average outage durations between both groups.</p>
+
+<p>Our observed difference in duration was 128.76 minutes and our p-value for this permutation test was 0.34. Using a significance level of 1%, we determine that this is a high p-value and therefore fail to reject the null. The difference in mean durations between missing and non-missing demand loss data was due to chance.</p>
+
+<iframe src="assets/duration_missing_hist.html" width="800" height="420" frameborder="0"></iframe>
 
 <h1 id="hypothesis-testing">Hypothesis Testing</h1>
+<p>We conducted a test to investigate whether there is a significant difference in the average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> between the ‘West’ region and the other regions based on the <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code> column.</p>
+
+<p>Recall that the average electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, was the highest in the ‘West’ region. We aim to test if there is a significant difference in the average electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, between the ‘West’ region and the other regions.</p>
+
+<p><strong>Null Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> in the Western region is not longer than the mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> in other regions.</p>
+
+<p><strong>Alternative Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> of power outages in the Western region is longer than the mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> in other regions.</p>
+
+<p><strong>Test Statistic</strong>: The difference between the observed mean of the ‘West’ region and the mean from the permutation distribution.</p>
+
+<iframe src="assets/hypothesis_test.html" width="800" height="420" frameborder="0"></iframe>
+
+<p>The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis. This provides strong evidence that the Western region, on average, has a higher amount of electricity consumption compared to the other regions.</p>
 
 <h1 id="framing-a-prediction-problem">Framing a Prediction Problem</h1>
+<p>From our previous section, we found out that regional factors can give a good idea of the total electricity consumption of a state, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>. NOOOOOOO</p>
+
+<p>Predicting the region of the outage based off of</p>
 
 <h1 id="baseline-model">Baseline Model</h1>
 
