@@ -61,13 +61,13 @@ We converted the `'MONTH'` column from numerical values to text values and renam
 
 Below are a sample of rows from our cleaned dataset, with a portion of columns selected.
 
-| STATE.ABBV | CLIMATE.CATEGORY | OUTAGE.DURATION | DEMAND.LOSS.MW | CUSTOMERS.AFFECTED | AFFECTED_BUCKET     |
-|:-----------|:-----------------|:----------------|:----------------|:------------------:|:-------------------:|
-| IN         | cold             | NaN             | 15             | 124000.0          | Large Customer Base |
-| WI         | cold             | 388             | 30             | 7600.0            | Small Customer Base |
-| TX         | warm             | 1320            | NaN            | 57531.0           | Medium Customer Base |
-| OR         | normal           | 989             | NaN            | NaN               | NaN                 |
-| PA         | normal           | 3189            | NaN            | 65000.0           | Medium Customer Base |
+| STATE.ABBV | CLIMATE.CATEGORY | OUTAGE.DURATION | DEMAND.LOSS.MW | AFFECTED_BUCKET     |
+|:--------------:|:----------------:|:---------------:|:---------------:|:-------------------:|
+| IN             | cold             | NaN             | 15             | Large Customer Base |
+| WI             | cold             | 388             | 30             | Small Customer Base |
+| TX             | warm             | 1320            | NaN            | Medium Customer Base |
+| OR             | normal           | 989             | NaN            | NaN                 |
+| PA             | normal           | 3189            | NaN            | Medium Customer Base |
 
 
 
