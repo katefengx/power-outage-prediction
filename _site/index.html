@@ -125,340 +125,205 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
   </tbody>
 </table>
 
-<p>Below are a sample of rows from our cleaned dataset.</p>
+<p>Below are a sample of rows from our cleaned dataset, with a portion of columns selected.</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">YEAR</th>
-      <th style="text-align: left">MONTH</th>
-      <th style="text-align: left">STATE</th>
       <th style="text-align: left">STATE.ABBV</th>
-      <th style="text-align: left">CLIMATE.REGION</th>
       <th style="text-align: left">CLIMATE.CATEGORY</th>
-      <th style="text-align: left">CAUSE.CATEGORY</th>
-      <th style="text-align: left">CAUSE.CATEGORY.DETAIL</th>
-      <th>OUTAGE.DURATION</th>
-      <th>DEMAND.LOSS.MW</th>
-      <th>CUSTOMERS.AFFECTED</th>
-      <th>TOTAL.SALES</th>
-      <th>TOTAL.CUSTOMERS</th>
-      <th>POPULATION</th>
-      <th>POPDEN_URBAN</th>
-      <th>AFFECTED_BUCKET</th>
+      <th style="text-align: left">OUTAGE.DURATION</th>
+      <th style="text-align: left">DEMAND.LOSS.MW</th>
+      <th style="text-align: center">CUSTOMERS.AFFECTED</th>
+      <th style="text-align: center">AFFECTED_BUCKET</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">766</td>
-      <td style="text-align: left">2000.0</td>
-      <td style="text-align: left">NaN</td>
-      <td style="text-align: left">North Carolina</td>
-      <td style="text-align: left">NC</td>
-      <td style="text-align: left">Southeast</td>
-      <td style="text-align: left">NaN</td>
-      <td style="text-align: left">severe weather</td>
-      <td>thunderstorm</td>
-      <td>NaN</td>
-      <td>5.00e+04</td>
-      <td>NaN</td>
-      <td>4.11e+06</td>
-      <td>8.08e+06</td>
-      <td>1367.2</td>
-      <td>Medium Customer Base</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">1049</td>
-      <td style="text-align: left">2008.0</td>
-      <td style="text-align: left">February</td>
-      <td style="text-align: left">Florida</td>
-      <td style="text-align: left">FL</td>
-      <td style="text-align: left">Southeast</td>
-      <td style="text-align: left">cold</td>
-      <td style="text-align: left">system operability disruption</td>
-      <td>NaN</td>
-      <td>91</td>
-      <td>318</td>
-      <td>5.40e+04</td>
-      <td>16515248</td>
-      <td>9.63e+06</td>
-      <td>1.85e+07</td>
-      <td>Medium Customer Base</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">575</td>
-      <td style="text-align: left">2005.0</td>
-      <td style="text-align: left">July</td>
-      <td style="text-align: left">Maryland</td>
-      <td style="text-align: left">MD</td>
-      <td style="text-align: left">Northeast</td>
-      <td style="text-align: left">normal</td>
-      <td style="text-align: left">severe weather</td>
-      <td>thunderstorm</td>
-      <td>4517</td>
-      <td>NaN</td>
-      <td>6.49e+04</td>
-      <td>6782930</td>
-      <td>2.36e+06</td>
-      <td>5.59e+06</td>
-      <td>Medium Customer Base</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">331</td>
-      <td style="text-align: left">2010.0</td>
-      <td style="text-align: left">June</td>
-      <td style="text-align: left">Indiana</td>
       <td style="text-align: left">IN</td>
-      <td style="text-align: left">Central</td>
-      <td style="text-align: left">normal</td>
-      <td style="text-align: left">severe weather</td>
-      <td>thunderstorm</td>
-      <td>513</td>
-      <td>NaN</td>
-      <td>5.30e+04</td>
-      <td>9121925</td>
-      <td>3.10e+06</td>
-      <td>6.49e+06</td>
-      <td>Medium Customer Base</td>
+      <td style="text-align: left">cold</td>
+      <td style="text-align: left">NaN</td>
+      <td style="text-align: left">15</td>
+      <td style="text-align: center">124000.0</td>
+      <td style="text-align: center">Large Customer Base</td>
     </tr>
     <tr>
-      <td style="text-align: left">705</td>
-      <td style="text-align: left">2003.0</td>
-      <td style="text-align: left">August</td>
-      <td style="text-align: left">Ohio</td>
-      <td style="text-align: left">OH</td>
-      <td style="text-align: left">Central</td>
+      <td style="text-align: left">WI</td>
+      <td style="text-align: left">cold</td>
+      <td style="text-align: left">388</td>
+      <td style="text-align: left">30</td>
+      <td style="text-align: center">7600.0</td>
+      <td style="text-align: center">Small Customer Base</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TX</td>
+      <td style="text-align: left">warm</td>
+      <td style="text-align: left">1320</td>
+      <td style="text-align: left">NaN</td>
+      <td style="text-align: center">57531.0</td>
+      <td style="text-align: center">Medium Customer Base</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">OR</td>
       <td style="text-align: left">normal</td>
-      <td style="text-align: left">system operability disruption</td>
-      <td>NaN</td>
-      <td>3137</td>
-      <td>7000</td>
-      <td>1.20e+06</td>
-      <td>14199635</td>
-      <td>5.40e+06</td>
-      <td>1.14e+07</td>
-      <td>Very Large Customer Base</td>
+      <td style="text-align: left">989</td>
+      <td style="text-align: left">NaN</td>
+      <td style="text-align: center">NaN</td>
+      <td style="text-align: center">NaN</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PA</td>
+      <td style="text-align: left">normal</td>
+      <td style="text-align: left">3189</td>
+      <td style="text-align: left">NaN</td>
+      <td style="text-align: center">65000.0</td>
+      <td style="text-align: center">Medium Customer Base</td>
     </tr>
   </tbody>
 </table>
 
 <h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
 
-<h3 id="univariate-analysis-customer-base-size-histogram-and-chloropleth-map">Univariate Analysis: <strong>Customer Base Size Histogram and Chloropleth Map</strong></h3>
+<h3 id="univariate-analysis">Univariate Analysis</h3>
+
+<p><strong>Customer Base Size Histogram</strong></p>
+
 <p>For our first univariate plot, we created a histogram to show the distribution of the customer base sizes. We found that most outages affected a medium to large customer base, with 371 outages affecting 10,000 to 100,000 customers and 385 outages affecting 100,000 to 500,000 customers.</p>
 <iframe src="assets/affected_hist.html" width="800" height="420" frameborder="0"></iframe>
+
+<p><strong>Chloropleth Map</strong></p>
 
 <p>We also examined how the number of power outages varied by state. To visualize this, we created a choropleth map showing the distribution of power outages across different states. We grouped the data by <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>, counted the number of rows per group, and added labels for the number of outages in states with over 50 outages. The major states here included California with 210 outages, Texas with 127 outages, and Washington with 97 outages over the 15.5 years of data.</p>
 <iframe src="assets/outages_map.html" width="800" height="420" frameborder="0"></iframe>
 
-<h3 id="bivariate-analysis-customer-base-vs-electricity-use-and-duration-over-time">Bivariate Analysis: <strong>Customer Base vs. Electricity Use and Duration Over Time</strong></h3>
-<p>We wanted to know if there was a relationship between the customer base categories <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code>, and its total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>. To explore this, we calculated the average total electricity consumption for each customer base category and visualized it using a bar chart. Outage electricity consumption grew as the customer base size increased, which was expected. The average total electricity consumption across outages serving a “Very Large Customer Base” was around 16.5MWh compared to around 9.8MWh for the “Small Customer Base”</p>
+<h3 id="bivariate-analysis">Bivariate Analysis</h3>
+<h4 id="customer-base-vs-duration"><strong>Customer Base vs. Duration</strong></h4>
+<p>We wanted to know if there was a relationship between the customer base categories <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code>, and the duration of power outages, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. To explore this, we calculated the average outage duration for each customer base category and visualized it using a bar chart. Average outage duration grew as the customer base size increased, meaning that longer power outages affected greater groups of customers.</p>
+
 <iframe src="assets/bar_region.html" width="800" height="420" frameborder="0"></iframe>
 
-<p>We also wanted to find out if there was a relationship between the <code class="language-plaintext highlighter-rouge">'YEAR'</code> and <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> columns, to see if there was a correlation between the year and the average duration of power outages. We found that there is a negative relationship between year and energy consumption, with the number of major outages peaking in 2005 before slowly decreasing.</p>
+<p>The average outage duration across outages serving a “Very Large Customer Base” was close to 7,000 minutes compared to around 1,000 minutes for the “Small Customer Base”. This large difference is likely due to the North American Cold Wave in January-March 2014 that caused power outages affecting large numbers of customers due to the frigid weather.</p>
+
+<h4 id="electricity-consumption-over-time"><strong>Electricity Consumption Over Time</strong></h4>
+
+<p>We also wanted to find out if there was a relationship between the <code class="language-plaintext highlighter-rouge">'YEAR'</code> and <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> columns, to see if there was a correlation between the year and the average electricity consumption.</p>
 <iframe src="assets/line_year.html" width="800" height="420" frameborder="0"></iframe>
 
+<p>We found that there is a negative relationship between year and energy consumption, with the number of major outages peaking in 2001 before slowly decreasing.</p>
+
 <h2 id="interesting-aggregates">Interesting Aggregates</h2>
-<p>To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, <code class="language-plaintext highlighter-rouge">CLIMATE.REGION</code>, and used the <code class="language-plaintext highlighter-rouge">mean()</code> function to determine the average <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code> across the months. This allowed us to identify patterns in energy consumption based on climate regions over time.</p>
+<p>To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, <code class="language-plaintext highlighter-rouge">CLIMATE.REGION</code>, and used the <code class="language-plaintext highlighter-rouge">mean()</code> function to determine the average <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code> across the months. This allowed us to identify patterns in energy consumption based on climate regions over time. Below are a few months of the pivot table.</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">CLIMATE.REGION</th>
-      <th style="text-align: right">January</th>
-      <th style="text-align: right">February</th>
-      <th style="text-align: right">March</th>
-      <th style="text-align: right">April</th>
-      <th style="text-align: right">May</th>
-      <th style="text-align: right">June</th>
-      <th style="text-align: right">July</th>
-      <th style="text-align: right">August</th>
-      <th style="text-align: right">September</th>
-      <th style="text-align: right">October</th>
-      <th style="text-align: right">November</th>
-      <th style="text-align: right">December</th>
+      <th style="text-align: left">MONTH</th>
+      <th style="text-align: center">January</th>
+      <th style="text-align: center">May</th>
+      <th style="text-align: center">August</th>
+      <th style="text-align: center">December</th>
+    </tr>
+    <tr>
+      <th style="text-align: left"><strong>CLIMATE.REGION</strong></th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center"> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left">Central</td>
-      <td style="text-align: right">9999134.88</td>
-      <td style="text-align: right">9704433.5</td>
-      <td style="text-align: right">8803031.0</td>
-      <td style="text-align: right">8296968.53</td>
-      <td style="text-align: right">8610485.55</td>
-      <td style="text-align: right">10035573.94</td>
-      <td style="text-align: right">12987285.21</td>
-      <td style="text-align: right">12126452.0</td>
-      <td style="text-align: right">10827517.43</td>
-      <td style="text-align: right">9321714.12</td>
-      <td style="text-align: right">8800424.8</td>
-      <td style="text-align: right">9975352.22</td>
+      <td style="text-align: center">9999134.88</td>
+      <td style="text-align: center">8610485.55</td>
+      <td style="text-align: center">12126452.0</td>
+      <td style="text-align: center">9975352.22</td>
     </tr>
     <tr>
       <td style="text-align: left">East North Central</td>
-      <td style="text-align: right">7115169.25</td>
-      <td style="text-align: right">6362546.8</td>
-      <td style="text-align: right">6440860.5</td>
-      <td style="text-align: right">6914944.64</td>
-      <td style="text-align: right">7823724.9</td>
-      <td style="text-align: right">7681555.95</td>
-      <td style="text-align: right">9408858.55</td>
-      <td style="text-align: right">8709003.54</td>
-      <td style="text-align: right">8017706.78</td>
-      <td style="text-align: right">7431004.14</td>
-      <td style="text-align: right">7656789.67</td>
-      <td style="text-align: right">8894578.7</td>
+      <td style="text-align: center">7115169.25</td>
+      <td style="text-align: center">7823724.9</td>
+      <td style="text-align: center">8709003.54</td>
+      <td style="text-align: center">8894578.7</td>
     </tr>
     <tr>
       <td style="text-align: left">Northeast</td>
-      <td style="text-align: right">6633505.48</td>
-      <td style="text-align: right">7301159.0</td>
-      <td style="text-align: right">5800729.46</td>
-      <td style="text-align: right">2866264.26</td>
-      <td style="text-align: right">5711189.12</td>
-      <td style="text-align: right">6769895.62</td>
-      <td style="text-align: right">8426713.92</td>
-      <td style="text-align: right">9024923.71</td>
-      <td style="text-align: right">7462276.09</td>
-      <td style="text-align: right">6897058.72</td>
-      <td style="text-align: right">3261755.5</td>
-      <td style="text-align: right">7670454.57</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Northwest</td>
-      <td style="text-align: right">7440878.07</td>
-      <td style="text-align: right">6698315.31</td>
-      <td style="text-align: right">6297616.08</td>
-      <td style="text-align: right">7013575.4</td>
-      <td style="text-align: right">6016778.71</td>
-      <td style="text-align: right">5466119.36</td>
-      <td style="text-align: right">7277678.33</td>
-      <td style="text-align: right">6321413.79</td>
-      <td style="text-align: right">6469954.43</td>
-      <td style="text-align: right">6061274.0</td>
-      <td style="text-align: right">7188666.57</td>
-      <td style="text-align: right">7085207.0</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">South</td>
-      <td style="text-align: right">16044959.81</td>
-      <td style="text-align: right">23281753.27</td>
-      <td style="text-align: right">21709001.46</td>
-      <td style="text-align: right">19045943.3</td>
-      <td style="text-align: right">15341953.13</td>
-      <td style="text-align: right">20628203.52</td>
-      <td style="text-align: right">22035386.1</td>
-      <td style="text-align: right">20993897.56</td>
-      <td style="text-align: right">22508896.89</td>
-      <td style="text-align: right">17128871.44</td>
-      <td style="text-align: right">14301226.0</td>
-      <td style="text-align: right">14798184.21</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">Southeast</td>
-      <td style="text-align: right">11478360.27</td>
-      <td style="text-align: right">11885612.56</td>
-      <td style="text-align: right">11779881.22</td>
-      <td style="text-align: right">11096123.0</td>
-      <td style="text-align: right">11940065.4</td>
-      <td style="text-align: right">11730216.44</td>
-      <td style="text-align: right">11820852.62</td>
-      <td style="text-align: right">16842852.41</td>
-      <td style="text-align: right">15557131.0</td>
-      <td style="text-align: right">15695574.0</td>
-      <td style="text-align: right">8904418.33</td>
-      <td style="text-align: right">10545208.33</td>
+      <td style="text-align: center">6633505.48</td>
+      <td style="text-align: center">5711189.12</td>
+      <td style="text-align: center">9024923.71</td>
+      <td style="text-align: center">7670454.57</td>
     </tr>
     <tr>
       <td style="text-align: left">Southwest</td>
-      <td style="text-align: right">3759643.0</td>
-      <td style="text-align: right">3374356.93</td>
-      <td style="text-align: right">2951417.83</td>
-      <td style="text-align: right">2976632.44</td>
-      <td style="text-align: right">3276493.33</td>
-      <td style="text-align: right">5019965.11</td>
-      <td style="text-align: right">5089792.33</td>
-      <td style="text-align: right">4101329.0</td>
-      <td style="text-align: right">2492126.0</td>
-      <td style="text-align: right">3672241.25</td>
-      <td style="text-align: right">2226672.0</td>
-      <td style="text-align: right">4280192.57</td>
+      <td style="text-align: center">3759643.0</td>
+      <td style="text-align: center">3276493.33</td>
+      <td style="text-align: center">4101329.0</td>
+      <td style="text-align: center">4280192.57</td>
     </tr>
     <tr>
       <td style="text-align: left">West</td>
-      <td style="text-align: right">18323967.46</td>
-      <td style="text-align: right">18861674.5</td>
-      <td style="text-align: right">19788192.33</td>
-      <td style="text-align: right">19451781.43</td>
-      <td style="text-align: right">19400558.89</td>
-      <td style="text-align: right">21078384.76</td>
-      <td style="text-align: right">24839961.07</td>
-      <td style="text-align: right">25358698.5</td>
-      <td style="text-align: right">24603592.5</td>
-      <td style="text-align: right">21710812.95</td>
-      <td style="text-align: right">19410953.92</td>
-      <td style="text-align: right">20674018.24</td>
+      <td style="text-align: center">18323967.46</td>
+      <td style="text-align: center">19400558.89</td>
+      <td style="text-align: center">25358698.5</td>
+      <td style="text-align: center">20674018.24</td>
     </tr>
     <tr>
       <td style="text-align: left">West North Central</td>
-      <td style="text-align: right">NaN</td>
-      <td style="text-align: right">NaN</td>
-      <td style="text-align: right">1242527.0</td>
-      <td style="text-align: right">NaN</td>
-      <td style="text-align: right">1433063.0</td>
-      <td style="text-align: right">1592024.4</td>
-      <td style="text-align: right">NaN</td>
-      <td style="text-align: right">1563340.75</td>
-      <td style="text-align: right">NaN</td>
-      <td style="text-align: right">1416356.0</td>
-      <td style="text-align: right">1490885.5</td>
-      <td style="text-align: right">1798136.0</td>
+      <td style="text-align: center">NaN</td>
+      <td style="text-align: center">1433063.0</td>
+      <td style="text-align: center">1563340.75</td>
+      <td style="text-align: center">1798136.0</td>
     </tr>
   </tbody>
 </table>
 
-<p>Similar to the pivot table above, we also wanted to investigate energy consumption patterns across different temperatures, <code class="language-plaintext highlighter-rouge">CLIMATE.CATEGORY</code>, for each state. We applied the mean() aggregate function to <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code>. Below are the first few rows of the table:</p>
+<p>Similar to the pivot table above, we also wanted to investigate energy consumption patterns across different temperatures, <code class="language-plaintext highlighter-rouge">CLIMATE.CATEGORY</code>, for each state. We applied the mean() aggregate function to <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code>. Below are the first few rows of the table.</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">STATE</th>
-      <th style="text-align: right">cold</th>
-      <th style="text-align: right">normal</th>
-      <th style="text-align: right">warm</th>
+      <th style="text-align: left">CLIMATE.CATEGORY</th>
+      <th style="text-align: center">cold</th>
+      <th style="text-align: center">normal</th>
+      <th style="text-align: center">warm</th>
+    </tr>
+    <tr>
+      <th style="text-align: left"><strong>STATE</strong></th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center"> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left">Alabama</td>
-      <td style="text-align: right">7647656.0</td>
-      <td style="text-align: right">7193314.5</td>
-      <td style="text-align: right">8934377.0</td>
+      <td style="text-align: center">7647656.0</td>
+      <td style="text-align: center">7193314.5</td>
+      <td style="text-align: center">8934377.0</td>
     </tr>
     <tr>
       <td style="text-align: left">Arizona</td>
-      <td style="text-align: right">5425664.57</td>
-      <td style="text-align: right">6438748.0</td>
-      <td style="text-align: right">5547223.57</td>
+      <td style="text-align: center">5425664.57</td>
+      <td style="text-align: center">6438748.0</td>
+      <td style="text-align: center">5547223.57</td>
     </tr>
     <tr>
       <td style="text-align: left">Arkansas</td>
-      <td style="text-align: right">3880604.86</td>
-      <td style="text-align: right">4163933.6</td>
-      <td style="text-align: right">3706199.33</td>
+      <td style="text-align: center">3880604.86</td>
+      <td style="text-align: center">4163933.6</td>
+      <td style="text-align: center">3706199.33</td>
     </tr>
     <tr>
       <td style="text-align: left">California</td>
-      <td style="text-align: right">21693834.79</td>
-      <td style="text-align: right">22031934.17</td>
-      <td style="text-align: right">21332614.62</td>
+      <td style="text-align: center">21693834.79</td>
+      <td style="text-align: center">22031934.17</td>
+      <td style="text-align: center">21332614.62</td>
     </tr>
     <tr>
       <td style="text-align: left">Colorado</td>
-      <td style="text-align: right">4030931.67</td>
-      <td style="text-align: right">4421043.75</td>
-      <td style="text-align: right">4289402.0</td>
+      <td style="text-align: center">4030931.67</td>
+      <td style="text-align: center">4421043.75</td>
+      <td style="text-align: center">4289402.0</td>
     </tr>
   </tbody>
 </table>
@@ -499,24 +364,22 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 <iframe src="assets/duration_missing_hist.html" width="800" height="420" frameborder="0"></iframe>
 
 <h1 id="hypothesis-testing">Hypothesis Testing</h1>
-<p>We conducted a test to investigate whether there is a significant difference in the average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> between the ‘West’ region and the other regions based on the <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code> column.</p>
+<p>We conducted a test to investigate whether there is a significant difference in the average <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> between the ‘Very Large Customer Base’ group and the other groups in the <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code> column.</p>
 
-<p>Recall that the average electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, was the highest in the ‘West’ region. We aim to test if there is a significant difference in the average electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, between the ‘West’ region and the other regions.</p>
+<p>Recall from the first univariate plot that the average outage duration, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, was the highest in the ‘Very Large Custoner Base’ group. We aim to test if this significant difference is statistically significant or due to random chance.</p>
 
-<p><strong>Null Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> in the Western region is not longer than the mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> in other regions.</p>
+<p><strong>Null Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> in the ‘Very Large Customer Base’ group is not longer than the mean <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> in other groups.</p>
 
-<p><strong>Alternative Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> of power outages in the Western region is longer than the mean <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> in other regions.</p>
+<p><strong>Alternative Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> in the ‘Very Large Customer Base’ group is longer than the mean <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> in other groups.</p>
 
-<p><strong>Test Statistic</strong>: The difference between the observed mean of the ‘West’ region and the mean from the permutation distribution.</p>
+<p><strong>Test Statistic</strong>: The difference between the observed mean of the ‘Very Large Customer Base’ group and the mean from the permutation distribution.</p>
 
 <iframe src="assets/hypothesis_test.html" width="800" height="420" frameborder="0"></iframe>
 
-<p>The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis. This provides strong evidence that the Western region, on average, has a higher amount of electricity consumption compared to the other regions.</p>
+<p>The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis. This provides strong evidence that outages affecting ‘Very Large Customer Base’ group, on average, are longer compared to outages affecting other groups.</p>
 
 <h1 id="framing-a-prediction-problem">Framing a Prediction Problem</h1>
-<p>From our previous section, we found out that regional factors can give a good idea of the total electricity consumption of a state, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>. NOOOOOOO</p>
-
-<p>Predicting the region of the outage based off of</p>
+<p>From our previous section, we found out that factors like the duration of a power outage can have a strong relationship to the number of customers affected. Therefore, we can use</p>
 
 <h1 id="baseline-model">Baseline Model</h1>
 

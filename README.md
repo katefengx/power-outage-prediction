@@ -59,20 +59,24 @@ We converted the `'MONTH'` column from numerical values to text values and renam
 | 100,000 - 500,000                  | Large Customer Base       |
 | 500,000+                           | Very Large Customer Base  |
 
-Below are a sample of rows from our cleaned dataset.
+Below are a sample of rows from our cleaned dataset, with a portion of columns selected.
 
-| YEAR | MONTH   | STATE         | STATE.ABBV | CLIMATE.REGION | CLIMATE.CATEGORY | CAUSE.CATEGORY      | CAUSE.CATEGORY.DETAIL | OUTAGE.DURATION | DEMAND.LOSS.MW | CUSTOMERS.AFFECTED | TOTAL.SALES | TOTAL.CUSTOMERS | POPULATION | POPDEN_URBAN | AFFECTED_BUCKET     |
-|:-----|:--------|:--------------|:-----------|:---------------|:-----------------|:--------------------|:----------------------|-----------------|----------------|--------------------|-------------|-----------------|------------|--------------|---------------------|
-| 766  | 2000.0  | NaN           | North Carolina | NC             | Southeast        | NaN                 | severe weather       | thunderstorm     | NaN             | 5.00e+04           | NaN         | 4.11e+06        | 8.08e+06  | 1367.2       | Medium Customer Base |
-| 1049 | 2008.0  | February      | Florida    | FL             | Southeast        | cold                | system operability disruption | NaN       | 91             | 318                | 5.40e+04   | 16515248        | 9.63e+06  | 1.85e+07     | Medium Customer Base |
-| 575  | 2005.0  | July          | Maryland   | MD             | Northeast        | normal              | severe weather       | thunderstorm     | 4517            | NaN                | 6.49e+04   | 6782930         | 2.36e+06  | 5.59e+06     | Medium Customer Base |
-| 331  | 2010.0  | June          | Indiana    | IN             | Central          | normal              | severe weather       | thunderstorm     | 513             | NaN                | 5.30e+04   | 9121925         | 3.10e+06  | 6.49e+06     | Medium Customer Base |
-| 705  | 2003.0  | August        | Ohio       | OH             | Central          | normal              | system operability disruption | NaN       | 3137            | 7000               | 1.20e+06   | 14199635        | 5.40e+06  | 1.14e+07     | Very Large Customer Base |
+| STATE.ABBV | CLIMATE.CATEGORY | OUTAGE.DURATION | DEMAND.LOSS.MW | CUSTOMERS.AFFECTED | AFFECTED_BUCKET     |
+|:-----------|:-----------------|:----------------|:----------------|:------------------:|:-------------------:|
+| IN         | cold             | NaN             | 15             | 124000.0          | Large Customer Base |
+| WI         | cold             | 388             | 30             | 7600.0            | Small Customer Base |
+| TX         | warm             | 1320            | NaN            | 57531.0           | Medium Customer Base |
+| OR         | normal           | 989             | NaN            | NaN               | NaN                 |
+| PA         | normal           | 3189            | NaN            | 65000.0           | Medium Customer Base |
+
 
 
 ## Exploratory Data Analysis
 
-### Univariate Analysis: **Customer Base Size Histogram and Chloropleth Map**
+### Univariate Analysis
+
+**Customer Base Size Histogram**
+
 For our first univariate plot, we created a histogram to show the distribution of the customer base sizes. We found that most outages affected a medium to large customer base, with 371 outages affecting 10,000 to 100,000 customers and 385 outages affecting 100,000 to 500,000 customers. 
 <iframe
   src="assets/affected_hist.html"
@@ -80,6 +84,8 @@ For our first univariate plot, we created a histogram to show the distribution o
   height="420"
   frameborder="0"
 ></iframe>
+
+**Chloropleth Map**
 
 We also examined how the number of power outages varied by state. To visualize this, we created a choropleth map showing the distribution of power outages across different states. We grouped the data by `'STATE.ABBV'`, counted the number of rows per group, and added labels for the number of outages in states with over 50 outages. The major states here included California with 210 outages, Texas with 127 outages, and Washington with 97 outages over the 15.5 years of data.
 <iframe
@@ -89,8 +95,10 @@ We also examined how the number of power outages varied by state. To visualize t
   frameborder="0"
 ></iframe>
 
-### Bivariate Analysis: **Customer Base vs. Electricity Use and Duration Over Time**
-We wanted to know if there was a relationship between the customer base categories `'AFFECTED_BUCKET'`, and its total electricity consumption, `'TOTAL.SALES'`. To explore this, we calculated the average total electricity consumption for each customer base category and visualized it using a bar chart. Outage electricity consumption grew as the customer base size increased, which was expected. The average total electricity consumption across outages serving a "Very Large Customer Base" was around 16.5MWh compared to around 9.8MWh for the "Small Customer Base"
+### Bivariate Analysis
+#### **Customer Base vs. Duration**
+We wanted to know if there was a relationship between the customer base categories `'AFFECTED_BUCKET'`, and the duration of power outages, `'OUTAGE.DURATION'`. To explore this, we calculated the average outage duration for each customer base category and visualized it using a bar chart. Average outage duration grew as the customer base size increased, meaning that longer power outages affected greater groups of customers. 
+
 <iframe
   src="assets/bar_region.html"
   width="800"
@@ -98,7 +106,11 @@ We wanted to know if there was a relationship between the customer base categori
   frameborder="0"
 ></iframe>
 
-We also wanted to find out if there was a relationship between the `'YEAR'` and `'OUTAGE.DURATION'` columns, to see if there was a correlation between the year and the average duration of power outages. We found that there is a negative relationship between year and energy consumption, with the number of major outages peaking in 2005 before slowly decreasing.
+The average outage duration across outages serving a "Very Large Customer Base" was close to 7,000 minutes compared to around 1,000 minutes for the "Small Customer Base". This large difference is likely due to the North American Cold Wave in January-March 2014 that caused power outages affecting large numbers of customers due to the frigid weather.
+
+#### **Electricity Consumption Over Time**
+
+We also wanted to find out if there was a relationship between the `'YEAR'` and `'TOTAL.SALES'` columns, to see if there was a correlation between the year and the average electricity consumption.
 <iframe
   src="assets/line_year.html"
   width="800"
@@ -106,30 +118,32 @@ We also wanted to find out if there was a relationship between the `'YEAR'` and 
   frameborder="0"
 ></iframe>
 
+We found that there is a negative relationship between year and energy consumption, with the number of major outages peaking in 2001 before slowly decreasing.
+
 ## Interesting Aggregates
-To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, `CLIMATE.REGION`, and used the `mean()` function to determine the average `TOTAL.SALES` across the months. This allowed us to identify patterns in energy consumption based on climate regions over time.
+To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, `CLIMATE.REGION`, and used the `mean()` function to determine the average `TOTAL.SALES` across the months. This allowed us to identify patterns in energy consumption based on climate regions over time. Below are a few months of the pivot table.
 
-| CLIMATE.REGION       | January      | February     | March        | April        | May          | June         | July         | August       | September    | October      | November     | December     |
-|:---------------------|------------:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|------------:|
-| Central             | 9999134.88   | 9704433.5   | 8803031.0   | 8296968.53  | 8610485.55  | 10035573.94 | 12987285.21 | 12126452.0  | 10827517.43 | 9321714.12  | 8800424.8   | 9975352.22  |
-| East North Central  | 7115169.25   | 6362546.8   | 6440860.5   | 6914944.64  | 7823724.9   | 7681555.95  | 9408858.55  | 8709003.54  | 8017706.78  | 7431004.14  | 7656789.67  | 8894578.7   |
-| Northeast           | 6633505.48   | 7301159.0   | 5800729.46  | 2866264.26  | 5711189.12  | 6769895.62  | 8426713.92  | 9024923.71  | 7462276.09  | 6897058.72  | 3261755.5   | 7670454.57  |
-| Northwest          | 7440878.07   | 6698315.31  | 6297616.08  | 7013575.4   | 6016778.71  | 5466119.36  | 7277678.33  | 6321413.79  | 6469954.43  | 6061274.0   | 7188666.57  | 7085207.0   |
-| South              | 16044959.81  | 23281753.27 | 21709001.46 | 19045943.3  | 15341953.13 | 20628203.52 | 22035386.1  | 20993897.56 | 22508896.89 | 17128871.44 | 14301226.0  | 14798184.21 |
-| Southeast          | 11478360.27  | 11885612.56 | 11779881.22 | 11096123.0  | 11940065.4  | 11730216.44 | 11820852.62 | 16842852.41 | 15557131.0  | 15695574.0  | 8904418.33  | 10545208.33 |
-| Southwest          | 3759643.0    | 3374356.93  | 2951417.83  | 2976632.44  | 3276493.33  | 5019965.11  | 5089792.33  | 4101329.0   | 2492126.0   | 3672241.25  | 2226672.0   | 4280192.57  |
-| West              | 18323967.46  | 18861674.5  | 19788192.33 | 19451781.43 | 19400558.89 | 21078384.76 | 24839961.07 | 25358698.5  | 24603592.5  | 21710812.95 | 19410953.92 | 20674018.24 |
-| West North Central | NaN          | NaN         | 1242527.0   | NaN         | 1433063.0   | 1592024.4   | NaN         | 1563340.75  | NaN         | 1416356.0   | 1490885.5   | 1798136.0   |
+| MONTH       | January     | May         | August      | December    |
+| **CLIMATE.REGION** |             |             |             |             |
+|:------------|:-----------:|:-----------:|:-----------:|:-----------:|
+| Central              | 9999134.88  | 8610485.55  | 12126452.0  | 9975352.22  |
+| East North Central   | 7115169.25  | 7823724.9   | 8709003.54  | 8894578.7   |
+| Northeast            | 6633505.48  | 5711189.12  | 9024923.71  | 7670454.57  |
+| Southwest            | 3759643.0   | 3276493.33  | 4101329.0   | 4280192.57  |
+| West                 | 18323967.46 | 19400558.89 | 25358698.5  | 20674018.24 |
+| West North Central   | NaN         | 1433063.0   | 1563340.75  | 1798136.0   |
 
-Similar to the pivot table above, we also wanted to investigate energy consumption patterns across different temperatures, `CLIMATE.CATEGORY`, for each state. We applied the mean() aggregate function to `TOTAL.SALES`. Below are the first few rows of the table:
 
-| STATE                 | cold        | normal       | warm        |
-|:----------------------|------------:|------------:|------------:|
-| Alabama              | 7647656.0   | 7193314.5   | 8934377.0   |
-| Arizona              | 5425664.57  | 6438748.0   | 5547223.57  |
-| Arkansas             | 3880604.86  | 4163933.6   | 3706199.33  |
-| California           | 21693834.79 | 22031934.17 | 21332614.62 |
-| Colorado             | 4030931.67  | 4421043.75  | 4289402.0   |
+Similar to the pivot table above, we also wanted to investigate energy consumption patterns across different temperatures, `CLIMATE.CATEGORY`, for each state. We applied the mean() aggregate function to `TOTAL.SALES`. Below are the first few rows of the table.
+
+| CLIMATE.CATEGORY   | cold        | normal      | warm        |
+| **STATE**    |         |       |         |
+|:------------|:-----------:|:-----------:|:-----------:|:-----------:|
+| Alabama      | 7647656.0   | 7193314.5   | 8934377.0   |
+| Arizona      | 5425664.57  | 6438748.0   | 5547223.57  |
+| Arkansas     | 3880604.86  | 4163933.6   | 3706199.33  |
+| California   | 21693834.79 | 22031934.17 | 21332614.62 |
+| Colorado     | 4030931.67  | 4421043.75  | 4289402.0   |
 
 # Assessment of Missingness
 ## NMAR Analysis
@@ -187,15 +201,15 @@ Our observed difference in duration was 128.76 minutes and our p-value for this 
 ></iframe>
 
 # Hypothesis Testing
-We conducted a test to investigate whether there is a significant difference in the average `'TOTAL.SALES'` between the 'West' region and the other regions based on the `'CLIMATE.REGION'` column.
+We conducted a test to investigate whether there is a significant difference in the average `'OUTAGE.DURATION'` between the 'Very Large Customer Base' group and the other groups in the `'AFFECTED_BUCKET'` column.
 
-Recall that the average electricity consumption, `'TOTAL.SALES'`, was the highest in the 'West' region. We aim to test if there is a significant difference in the average electricity consumption, `'TOTAL.SALES'`, between the 'West' region and the other regions.
+Recall from the first univariate plot that the average outage duration, `'OUTAGE.DURATION'`, was the highest in the 'Very Large Custoner Base' group. We aim to test if this significant difference is statistically significant or due to random chance.
 
-**Null Hypothesis:** The mean `'TOTAL.SALES'` in the Western region is not longer than the mean `'TOTAL.SALES'` in other regions.
+**Null Hypothesis:** The mean `'OUTAGE.DURATION'` in the 'Very Large Customer Base' group is not longer than the mean `'OUTAGE.DURATION'` in other groups.
 
-**Alternative Hypothesis:** The mean `'TOTAL.SALES'` of power outages in the Western region is longer than the mean `'TOTAL.SALES'` in other regions.
+**Alternative Hypothesis:** The mean `'OUTAGE.DURATION'` in the 'Very Large Customer Base' group is longer than the mean `'OUTAGE.DURATION'` in other groups.
 
-**Test Statistic**: The difference between the observed mean of the 'West' region and the mean from the permutation distribution.
+**Test Statistic**: The difference between the observed mean of the 'Very Large Customer Base' group and the mean from the permutation distribution.
 
 <iframe
   src="assets/hypothesis_test.html"
@@ -204,12 +218,10 @@ Recall that the average electricity consumption, `'TOTAL.SALES'`, was the highes
   frameborder="0"
 ></iframe>
 
-The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis. This provides strong evidence that the Western region, on average, has a higher amount of electricity consumption compared to the other regions.
+The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis. This provides strong evidence that outages affecting 'Very Large Customer Base' group, on average, are longer compared to outages affecting other groups.
 
 # Framing a Prediction Problem
-From our previous section, we found out that regional factors can give a good idea of the total electricity consumption of a state, `'TOTAL.SALES'`. NOOOOOOO
-
-Predicting the region of the outage based off of 
+From our previous section, we found out that factors like the duration of a power outage can have a strong relationship to the number of customers affected. Therefore, we can use 
 
 # Baseline Model
 
