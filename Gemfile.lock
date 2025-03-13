@@ -304,6 +304,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  jekyll-titles-from-headings
   minima
 
 BUNDLED WITH

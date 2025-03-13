@@ -3,18 +3,18 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Power Outage Prediction | power-outage-prediction</title>
+<title>Predicting Power Outage Severity | power-outage-prediction</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Power Outage Prediction" />
+<meta property="og:title" content="Predicting Power Outage Severity" />
 <meta property="og:locale" content="en_US" />
 <link rel="canonical" href="http://localhost:4000/" />
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="power-outage-prediction" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Power Outage Prediction" />
+<meta property="twitter:title" content="Predicting Power Outage Severity" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","headline":"Power Outage Prediction","name":"power-outage-prediction","url":"http://localhost:4000/"}</script>
+{"@context":"https://schema.org","@type":"WebSite","headline":"Predicting Power Outage Severity","name":"power-outage-prediction","url":"http://localhost:4000/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="power-outage-prediction" /></head>
 <body><header class="site-header" role="banner">
@@ -29,13 +29,12 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/">Power Outage Prediction</a></div>
+        <div class="trigger"><a class="page-link" href="/">Predicting Power Outage Severity</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h1 class="page-heading">Power Outage Prediction</h1><h1 id="power-outage-prediction">Power Outage Prediction</h1>
-<p>by Kate Feng and Tracy Vu</p>
+        <div class="home"><h1 class="page-heading">Predicting Power Outage Severity</h1><p>by Kate Feng and Tracy Vu</p>
 
 <h1 id="introduction">Introduction</h1>
 
@@ -373,14 +372,194 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 <p>The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis. This provides strong evidence that outages affecting ‘Very Large Customer Base’ group, on average, are longer compared to outages affecting other groups.</p>
 
 <h1 id="framing-a-prediction-problem">Framing a Prediction Problem</h1>
-<p>From our previous section, we found out that factors like the duration of a power outage can have a strong relationship to the number of customers affected. Therefore, we can use</p>
+
+<p>Our model will aim to <strong>predict the number of customers affected by a power outage</strong>. We binned our <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> column, with the buckets being Small Customer Base (0 - 10,000), Medium Customer Base (10,000 - 100,000), Large Customer Base (100,000 - 500,000), and Very Large Customer Base (500,000+). This will be a multiclass classification model since there are various buckets that an outage could fall into. We chose to predict this variable because we believe that it would be useful in future efforts of preparation and prioritization regarding power outages.</p>
+
+<p>The metric used will be an <strong>F1-score</strong> since there are multiple classes, meaning that they may be class imbalances. We wanted to ensure that our model had both high precision (avoid false positives) and high recall (avoid false negatives).</p>
+
+<p>At the time of prediction, we would know the outage duration, climate region, cause category, climate category, urban population density, total customers (annually), population, total sales (total electricity consumption), and demand loss (peak demand lost). This provides us with information to determine the affected buckets of customers.</p>
 
 <h1 id="baseline-model">Baseline Model</h1>
 
+<p>For our baseline model, we are using a Random Forest Classifier with these four features: <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. The first three variables, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, contain nominal values while the last variable, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, contains continuous values of minutes. These features were chosen since we believed they helped utility companies understand which outages are likely to have a larger impact, based on our previous analyses. A higher duration value could represent higher severity in an outage. Cause category reveals the outage cause and climate category reveals the climate type, both of which may impact duration and severity. Climate region shows the geographic region, which provides information for severity and customers affected. These features provide key insights for affected customers.</p>
+
+<p>We one hot encoded the nominal variables, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code> to ensure that they were properly interpreted by the classifier. We passed <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> through as-is because applying transformations like Standard Scaler would not improve the accuracy since the Random Forest model splits data based on thresholds in each feature.</p>
+
+<p>The metric, F1 score, of this model is 0.55. The F1 score for each customer base bucket is shown below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-Score</th>
+      <th>Support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Large Customer Base</td>
+      <td>0.48</td>
+      <td>0.53</td>
+      <td>0.50</td>
+      <td>73</td>
+    </tr>
+    <tr>
+      <td>Medium Customer Base</td>
+      <td>0.42</td>
+      <td>0.45</td>
+      <td>0.43</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <td>Small Customer Base</td>
+      <td>0.92</td>
+      <td>0.85</td>
+      <td>0.89</td>
+      <td>55</td>
+    </tr>
+    <tr>
+      <td>Very Large Customer Base</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td><strong>Accuracy</strong></td>
+      <td> </td>
+      <td> </td>
+      <td><strong>0.55</strong></td>
+      <td><strong>211</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Macro avg</strong></td>
+      <td>0.45</td>
+      <td>0.46</td>
+      <td>0.46</td>
+      <td>211</td>
+    </tr>
+    <tr>
+      <td><strong>Weighted avg</strong></td>
+      <td>0.54</td>
+      <td>0.55</td>
+      <td>0.54</td>
+      <td>211</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This model best predicts ‘Small Customer Base’, likely because there are clear patterns (such as shorter outage duration or easily-fixed outage cause) to predict an outage affecting less people. The accuracy for the ‘Very Large Customer Base’ was 0, meaning this model was not able to predict outages affecting over 500,000 customers at all. This is likely due to the small number of examples in the dataset for this category, with 16 examples.</p>
+
 <h1 id="final-model">Final Model</h1>
+
+<p>Since our accuracy for the last model was mediocre, we wanted to analyze which features we should continue using for our final model and which features were decreasing the accuracy.</p>
+
+<iframe src="assets/first_importance.html" width="800" height="420" frameborder="0"></iframe>
+
+<p>Upon plotting the feature importances, we found that the variables <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code> and <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code> contributed very little to predicting customer base size. In contrast, certain values in <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, such as ‘severe weather’ and ‘intentional attack’, had higher importance. Notably, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> had the highest importance, indicating that the model relied heavily on this feature when making splits.</p>
+
+<p>For the final model, we removed the two non-contributing features and added five more, bringing the total to seven features: <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'TOTAL.CUSTOMERS'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, <code class="language-plaintext highlighter-rouge">'POPULATION'</code>, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, and <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>.</p>
+
+<p>The additional features included:</p>
+<ul>
+  <li><strong>Population</strong> (discrete), representing the size of the area impacted by the outage.</li>
+  <li><strong>Total Sales</strong> (continuous), reflecting the energy consumption in a region and helping to express the severity of the outage.</li>
+  <li><strong>Total Customers</strong> (discrete), indicating the number of customers in the affected state, which can give a better sense of the potential impact.</li>
+  <li><strong>Demand Loss</strong> (continuous), which relates to the economic impact of the outage, highlighting its severity.</li>
+  <li><strong>Urban Population Density</strong> (discrete), which provides insight into how densely populated an area is, and potentially how many people would be affected by the outage.</li>
+</ul>
+
+<p>We included these additional features because they seemed to represent critical factors affecting the impact of outages on customers. Features like population and urban density help to capture the size of the affected area, while total sales and demand loss give a better gauge of the outage’s economic and energy impact. Together, these factors enhance our model’s ability to predict the severity of outages on customers.</p>
+
+<p>The F1 score of this improved model is 0.80. The F1 score for each customer base bucket is shown below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1-Score</th>
+      <th>Support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Large Customer Base</td>
+      <td>0.60</td>
+      <td>0.75</td>
+      <td>0.67</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <td>Medium Customer Base</td>
+      <td>0.77</td>
+      <td>0.62</td>
+      <td>0.69</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <td>Small Customer Base</td>
+      <td>0.96</td>
+      <td>0.98</td>
+      <td>0.97</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <td>Very Large Customer Base</td>
+      <td>0.83</td>
+      <td>0.83</td>
+      <td>0.83</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td><strong>Accuracy</strong></td>
+      <td> </td>
+      <td> </td>
+      <td><strong>0.80</strong></td>
+      <td><strong>138</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Macro avg</strong></td>
+      <td>0.79</td>
+      <td>0.80</td>
+      <td>0.79</td>
+      <td>138</td>
+    </tr>
+    <tr>
+      <td><strong>Weighted avg</strong></td>
+      <td>0.81</td>
+      <td>0.80</td>
+      <td>0.80</td>
+      <td>138</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <strong>overall F1-Score improved to 0.80</strong>, reflecting an increase in accuracy across all customer base categories. Notably, the ‘Very Large Customer Base’ saw a significant improvement, with its <strong>F1-Score rising from 0.0 to 0.83</strong>. Despite the sample size being small (only 6 samples), the model performed much better due to the inclusion of more features, which allowed the ‘Very Large Customer Base’ to be more adequately represented.</p>
+
+<p>Additionally, the accuracy for other categories also showed improvement. For example, the ‘Small Customer Base’ now has an <strong>impressive F1-Score of 0.97</strong>, demonstrating that the model can effectively predict this category. These improvements suggest that with more features and better representation, the model has become more capable of distinguishing between the various customer base categories.</p>
+
+<p>We can visualize the prediction accuracy in a confusion matrix:</p>
+<iframe src="assets/confusion_matrix.html" width="800" height="420" frameborder="0"></iframe>
 
 <h1 id="fairness-analysis">Fairness Analysis</h1>
 
+<p>Our groups to test the model’s fairness are whether the cause of the outage, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, was severe weather or not. We used the accuracy as the evaluation metric since it represents the proportion of correct predictions made for both groups. This metric suits the classification problem as we are trying to see whether the model is accurate in distinguishing between severe weather and other outage causes.</p>
+
+<p>We decided to test the model’s fairness on these groups because we found that the false negative rates of outages caused by severe weather were the highest out of all the cause categories. This raised our concerns about whether the model was underperforming for this cause.</p>
+
+<iframe src="assets/fnr_cause.html" width="800" height="420" frameborder="0"></iframe>
+
+<p><strong>Null Hypothesis:</strong> The model is fair. Its accuracy for severe weather and non-severe weather cases are roughly the same, and any differences are due to random chance.</p>
+
+<p><strong>Alternative Hypothesis:</strong> The model is unfair. Its accuracy for severe weather and non-severe weather cases are significantly different.</p>
+
+<p>We performed a permutation test with 5000 trials where we repeatedly computed the difference in accuracy between “severe weather” and the rest of the categories, “other”. Our observed value was -0.278 difference and we got a p-value of 0.0, which is significant using a standard significant level of 0.05. This means <strong>we reject our null hypothesis that our model is completely fair.</strong> Our model shows different levels of accuracy when it comes to if the power outage is caused by severe weather or not. Specifically, severe weather appears to be associated with <strong>lower accuracy</strong> compared to other causes, as indicated by the negative difference in accuracy.</p>
+
+<iframe src="assets/fairness_perm.html" width="800" height="420" frameborder="0"></iframe>
 </div>
 
       </div>
