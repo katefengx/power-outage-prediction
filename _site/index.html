@@ -95,7 +95,9 @@
 <p>In order to effectively analyze our dataset, we must first clean it. To do this, we first dropped columns that we knew we wouldn’t be using.
 The dropped columns include: <code class="language-plaintext highlighter-rouge">"OBS"</code>, <code class="language-plaintext highlighter-rouge">"variables"</code>, <code class="language-plaintext highlighter-rouge">"RES.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"COM.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"IND.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.PRICE"</code>, <code class="language-plaintext highlighter-rouge">"RES.SALES"</code>, <code class="language-plaintext highlighter-rouge">"COM.SALES"</code>, <code class="language-plaintext highlighter-rouge">"IND.SALES"</code>, <code class="language-plaintext highlighter-rouge">"RES.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"COM.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"IND.PERCEN"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUSTOMERS"</code>, <code class="language-plaintext highlighter-rouge">"RES.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"COM.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"IND.CUST.PCT"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.STATE"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.USA"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.REL"</code>, <code class="language-plaintext highlighter-rouge">"PC.REALGSP.CHANGE"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"TOTAL.REALGSP"</code>, <code class="language-plaintext highlighter-rouge">"UTIL.CONTRI"</code>, <code class="language-plaintext highlighter-rouge">"PI.UTIL.OFUSA"</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'POPPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_UC'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_RURAL'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_UC'</code>, <code class="language-plaintext highlighter-rouge">'PCT_LAND'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_TOT'</code>, <code class="language-plaintext highlighter-rouge">'PCT_WATER_INLAND'</code>, <code class="language-plaintext highlighter-rouge">'ANOMALY.LEVEL'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.START.TIME'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.DATE'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.RESTORATION.TIME'</code>, <code class="language-plaintext highlighter-rouge">'HURRICANE.NAMES'</code>, <code class="language-plaintext highlighter-rouge">'NERC.REGION'</code>, <code class="language-plaintext highlighter-rouge">'AREAPCT_URBAN'</code>.</p>
 
-<p>We converted the <code class="language-plaintext highlighter-rouge">'MONTH'</code> column from numerical values to text values and renamed columns (<code class="language-plaintext highlighter-rouge">'U.S._STATE'</code> to <code class="language-plaintext highlighter-rouge">'STATE'</code>, <code class="language-plaintext highlighter-rouge">'POSTAL.CODE'</code> to <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>) for readability. Furthermore, in order to predict the size of the customer base affected, we created another column called <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code> with lables based off of <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> with these bins:</p>
+<p>We converted the <code class="language-plaintext highlighter-rouge">'MONTH'</code> column from numerical values to text values and renamed columns (<code class="language-plaintext highlighter-rouge">'U.S._STATE'</code> to <code class="language-plaintext highlighter-rouge">'STATE'</code>, <code class="language-plaintext highlighter-rouge">'POSTAL.CODE'</code> to <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>) for readability.</p>
+
+<p>Furthermore, in order to predict the size of the customer base affected, we created another column called <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code> with labels based off of <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> with these bins:</p>
 
 <table>
   <thead>
@@ -181,21 +183,21 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 
 <p><strong>Customer Base Size Histogram</strong></p>
 
-<p>For our first univariate plot, we created a histogram to show the distribution of the customer base sizes. We found that most outages affected a medium to large customer base, with 371 outages affecting 10,000 to 100,000 customers and 385 outages affecting 100,000 to 500,000 customers.</p>
+<p>For our first univariate plot, we created a histogram to show the distribution of the customer base sizes. We found that most outages affected a <strong>medium to large customer base</strong>, with 371 outages affecting 10,000 to 100,000 customers and 385 outages affecting 100,000 to 500,000 customers.</p>
 <iframe src="assets/affected_hist.html" width="800" height="420" frameborder="0"></iframe>
 
 <p><strong>Chloropleth Map</strong></p>
 
-<p>We also examined how the number of power outages varied by state. To visualize this, we created a choropleth map showing the distribution of power outages across different states. We grouped the data by <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>, counted the number of rows per group, and added labels for the number of outages in states with over 50 outages. The major states here included California with 210 outages, Texas with 127 outages, and Washington with 97 outages over the 15.5 years of data.</p>
+<p>We also examined how the number of power outages varied by state. To visualize this, we created a choropleth map showing the distribution of power outages across different states. We grouped the data by <code class="language-plaintext highlighter-rouge">'STATE.ABBV'</code>, counted the number of rows per group, and added labels for the number of outages in states with over 50 outages. The major states here included <strong>California with 210 outages</strong>, <strong>Texas with 127 outages</strong>, and <strong>Washington with 97 outages</strong> over the 15.5 years of data.</p>
 <iframe src="assets/outages_map.html" width="800" height="420" frameborder="0"></iframe>
 
 <h3 id="bivariate-analysis">Bivariate Analysis</h3>
 <h4 id="customer-base-vs-duration"><strong>Customer Base vs. Duration</strong></h4>
-<p>We wanted to know if there was a relationship between the customer base categories <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code>, and the duration of power outages, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. To explore this, we calculated the average outage duration for each customer base category and visualized it using a bar chart. Average outage duration grew as the customer base size increased, meaning that longer power outages affected greater groups of customers.</p>
+<p>We wanted to know if there was a relationship between the customer base categories <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code>, and the duration of power outages, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. To explore this, we calculated the average outage duration for each customer base category and visualized it using a bar chart. Average outage duration grew as the customer base size increased, meaning that <strong>longer power outages affected greater groups of customers</strong>.</p>
 
 <iframe src="assets/bar_region.html" width="800" height="420" frameborder="0"></iframe>
 
-<p>The average outage duration across outages serving a “Very Large Customer Base” was close to 7,000 minutes compared to around 1,000 minutes for the “Small Customer Base”. This large difference is likely due to the North American Cold Wave in January-March 2014 that caused power outages affecting large numbers of customers due to the frigid weather.</p>
+<p>The average outage duration across outages serving a “Very Large Customer Base” was close to 7,000 minutes compared to around 1,000 minutes for the “Small Customer Base”. This large difference is likely due to the <strong>North American Cold Wave in January-March 2014</strong> that caused power outages affecting large numbers of customers due to the frigid weather.</p>
 
 <h4 id="electricity-consumption-over-time"><strong>Electricity Consumption Over Time</strong></h4>
 
@@ -205,7 +207,9 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 <p>We found that there is a negative relationship between year and energy consumption, with the number of major outages peaking in 2001 before slowly decreasing.</p>
 
 <h2 id="interesting-aggregates">Interesting Aggregates</h2>
-<p>To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, <code class="language-plaintext highlighter-rouge">CLIMATE.REGION</code>, and used the <code class="language-plaintext highlighter-rouge">mean()</code> function to determine the average <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code> across the months. This allowed us to identify patterns in energy consumption based on climate regions over time. In general, the Southwest has less total energy consumption throughout the year. Below are a few months of the pivot table.</p>
+<p>To further investigate the sales across climate regions, we created a pivot table. We grouped our first pivot table by the column, <code class="language-plaintext highlighter-rouge">CLIMATE.REGION</code>, and used the <code class="language-plaintext highlighter-rouge">mean()</code> function to determine the average <code class="language-plaintext highlighter-rouge">TOTAL.SALES</code> across the months. This allowed us to <strong>identify patterns in energy consumption based on climate regions over time.</strong></p>
+
+<p>In general, the Southwest has less total energy consumption throughout the year. Below are a few months of the pivot table.</p>
 
 <table>
   <thead>
@@ -323,9 +327,10 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 
 <h1 id="assessment-of-missingness">Assessment of Missingness</h1>
 <h2 id="nmar-analysis">NMAR Analysis</h2>
-<p>The column <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> is likely to be NMAR because its missingness does not depend on other columns. The missingness of this column is dependent on how each company records the number of customers affected, as the <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> column is an aggregate of multiple companies. Different companies could have different standards for recording their number of customers affected.</p>
 
-<p>If we had the information on the standards of how each company records their data, this column could be MAR.</p>
+<p>The column <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> is likely NMAR because its missingness does not depend on other columns. Instead, the missingness of this column depends on how each company records the number of customers affected, as <strong>this column aggregates data from multiple companies.</strong> Variations in reporting standards, such as differing thresholds for what constitutes an affected customer or inconsistencies in data collection methods, could lead to systematic patterns of missingness.</p>
+
+<p>However, if we had access to each company’s recording standards, the missingness might be MAR rather than NMAR.</p>
 
 <h2 id="missingness-dependency">Missingness Dependency</h2>
 <p>There are various columns where there is missing data. We wanted to find out if the total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, is dependent on the missingness in the electricity demand loss column, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>.</p>
@@ -338,11 +343,17 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 
 <p><strong>Alternative Hypothesis:</strong> The missingness of the data in the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column does depend on the total electricity consumption, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>.</p>
 
-<p>Our test statistic was the difference in means between average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> for data without missing <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> and the average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> for data with missing <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>. We got a low p-value of 0.001, which is below the standard 0.05 significance threshold. We obtained a low p-value of 0.001, which is below the standard 0.05 significance threshold. Therefore, we reject the null hypothesis and conclude that the missingness of <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> is dependent on <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>: when <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> is lower, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> is more likely to be missing. This dependency is possibly due to reporting bias, where locations with less electricity consumption do not have record of the demand loss because it is seen as less impactful.</p>
+<p>Our test statistic was the difference in means between average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> for data without missing <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> and the average <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> for data with missing <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>. We got a low p-value of 0.001, which is below the standard 0.05 significance threshold. We obtained a low p-value of 0.001, which is below the standard 0.05 significance threshold.</p>
+
+<p>Therefore, we <strong>reject the null hypothesis</strong> and conclude that the missingness of <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> is dependent on <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>: when <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code> is lower, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> is more likely to be missing.</p>
+
+<p>This dependency is possibly due to reporting bias, where locations with less electricity consumption do not have record of the demand loss because it is seen as less impactful.</p>
 
 <iframe src="assets/dependent_hist.html" width="800" height="420" frameborder="0"></iframe>
 
-<p>Next, we wanted to see if the missingness of the electricity demand loss column, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>, depended on the duration of the power outage, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. Our set of hypotheses were:</p>
+<p>Next, we wanted to see if the missingness of the electricity demand loss column, <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>, depended on the duration of the power outage, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>.</p>
+
+<p>Our set of hypotheses for this test were:</p>
 
 <p><strong>Null Hypothesis:</strong> The missingness of the data in the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column does not depend on the length of the power outage, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>.</p>
 
@@ -352,14 +363,14 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 
 <p>We performed a permutation test by shuffling the “Missing/Not Missing” labels for the <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code> column, and calculated the difference in average outage durations between both groups.</p>
 
-<p>Our observed difference in duration was 128.76 minutes and our p-value for this permutation test was 0.34. Using a significance level of 1%, we determine that this is a high p-value and therefore fail to reject the null. The difference in mean durations between missing and non-missing demand loss data was due to chance.</p>
+<p>Our observed difference in duration was 128.76 minutes and our p-value for this permutation test was 0.34. Using a significance level of 5%, we determine that this is a high p-value and therefore <strong>fail to reject the null.</strong> The difference in mean durations between missing and non-missing demand loss data was likely due to chance.</p>
 
 <iframe src="assets/duration_missing_hist.html" width="800" height="420" frameborder="0"></iframe>
 
 <h1 id="hypothesis-testing">Hypothesis Testing</h1>
 <p>We conducted a test to investigate whether there is a significant difference in the average <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> between the ‘Very Large Customer Base’ group and the other groups in the <code class="language-plaintext highlighter-rouge">'AFFECTED_BUCKET'</code> column.</p>
 
-<p>Recall from the first univariate plot that the average outage duration, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, was the highest in the ‘Very Large Customer Base’ group. We aim to test if this significant difference is statistically significant or due to random chance.</p>
+<p>Recall from the first univariate plot that the average outage duration, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, was the <strong>highest in the ‘Very Large Customer Base’ group.</strong> We aim to test if this significant difference is statistically significant or due to random chance.</p>
 
 <p><strong>Null Hypothesis:</strong> The mean <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> in the ‘Very Large Customer Base’ group is not longer than the mean <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> in other groups.</p>
 
@@ -369,19 +380,26 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 
 <iframe src="assets/hypothesis_test.html" width="800" height="420" frameborder="0"></iframe>
 
-<p>The p-value came out to be extremely small (essentially 0.0), meaning we can reject the null hypothesis at a 0.01 significance level. This provides strong evidence that outages affecting ‘Very Large Customer Base’ group, on average, are longer compared to outages affecting other groups.</p>
+<p>The p-value came out to be extremely small (essentially 0.0), meaning we can <strong>reject the null hypothesis at a 0.01 significance level.</strong> This provides strong evidence that outages affecting ‘Very Large Customer Base’ group, on average, are longer compared to outages affecting other groups.</p>
 
 <h1 id="framing-a-prediction-problem">Framing a Prediction Problem</h1>
 
-<p>Our model will aim to <strong>predict the number of customers affected by a power outage</strong>. We binned our <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> column, with the buckets being Small Customer Base (0 - 10,000), Medium Customer Base (10,000 - 100,000), Large Customer Base (100,000 - 500,000), and Very Large Customer Base (500,000+). This will be a <strong>multiclass classification</strong> model since there are various buckets that an outage could fall into. We chose to predict this variable because we believe that it would be useful in future efforts of preparation and prioritization regarding power outages.</p>
+<p>Our model will aim to <strong>predict the number of customers affected by a power outage</strong>. We binned our <code class="language-plaintext highlighter-rouge">'CUSTOMERS.AFFECTED'</code> column, with the buckets being Small Customer Base (0 - 10,000), Medium Customer Base (10,000 - 100,000), Large Customer Base (100,000 - 500,000), and Very Large Customer Base (500,000+).</p>
+
+<p>This will be a <strong>multiclass classification</strong> model since there are various buckets that an outage could fall into. We chose to predict this variable because we believe that it would be useful in future efforts of preparation and prioritization regarding power outages.</p>
 
 <p>The metric used will be an <strong>F1-score</strong> since there are multiple classes, meaning that there may be class imbalances, which is why it is better than using accuracy as a metric. We wanted to ensure that our model had both high precision (avoid false positives) and high recall (avoid false negatives).</p>
 
-<p>At the time of prediction, we would know the outage duration, climate region, cause category, climate category, urban population density, total customers (annually), population, total sales (total electricity consumption), and demand loss (peak demand lost). This provides us with information to determine the affected buckets of customers.</p>
+<p>At the time of prediction, we would know the <strong>outage duration, climate region, cause category, climate category, urban population density, total customers of the state</strong> (annually), <strong>population of the state, total sales of the state</strong> (total electricity consumption), and <strong>demand loss</strong> (peak demand lost during the outage). This provides us with information to predict the size of the customer base that was affected.</p>
 
 <h1 id="baseline-model">Baseline Model</h1>
 
-<p>For our baseline model, we are using a Random Forest Classifier with these four features: <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. The first three variables, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, contain nominal values while the last variable, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, contains continuous quantitative values of minutes. These features were chosen since we believed they helped utility companies understand which outages are likely to have a larger impact, based on our previous analyses. A higher duration value could represent higher severity in an outage. Cause category reveals the outage cause and climate category reveals the climate type, both of which may impact duration and severity. Climate region shows the geographic region, which provides information for severity and customers affected. These features provide key insights for affected customers.</p>
+<p>For our baseline model, we are using a Random Forest Classifier with these four features: <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>. The first three variables, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, contain nominal values while the last variable, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, contains continuous quantitative values of minutes.</p>
+
+<p>These features were chosen since we believed they helped utility companies understand which outages are likely to have a larger impact, based on our previous analyses.</p>
+
+<p>A higher duration value could represent higher severity in an outage. Cause category reveals the outage cause and climate category reveals the climate type, both of which may impact duration and severity. Climate region shows the geographic region, which provides information for severity and customers affected. 
+These features provide key insights for affected customers.</p>
 
 <p>We one hot encoded the nominal variables, <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code>, <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code> to ensure that they were properly interpreted by the classifier. We passed <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> through as-is because applying transformations like Standard Scaler would not improve the accuracy since the Random Forest model splits data based on thresholds in each feature.</p>
 
@@ -450,17 +468,19 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
   </tbody>
 </table>
 
-<p>This model best predicts ‘Small Customer Base’, likely because there are clear patterns (such as shorter outage duration or easily-fixed outage cause) to predict an outage affecting less people. The accuracy for the ‘Very Large Customer Base’ was 0, meaning this model was not able to predict outages affecting over 500,000 customers at all. This is likely due to the small number of examples in the dataset for this category, with 16 examples. This model ended up having a mediocre F1-score, so there is a lot of room for improvement.</p>
+<p>This model best predicts ‘Small Customer Base’, likely because there are clear patterns (such as shorter outage duration or easily-fixed outage cause) to predict an outage affecting less people.</p>
+
+<p>The accuracy for the ‘Very Large Customer Base’ was 0, meaning this model was not able to predict outages affecting over 500,000 customers at all. This is likely due to the small number of examples in the dataset for this category, with 16 examples. This model ended up having a mediocre F1-score, so there is a lot of room for improvement.</p>
 
 <h1 id="final-model">Final Model</h1>
 
-<p>Since our accuracy for the last model was low, we wanted to analyze which features we should continue using for our final model and which features were decreasing the accuracy.</p>
+<p>Since our accuracy for the last model was low, we wanted to analyze <strong>which features we should continue using for our final model</strong> and which features were decreasing the accuracy.</p>
 
 <iframe src="assets/first_importance.html" width="800" height="420" frameborder="0"></iframe>
 
 <p>Upon plotting the feature importances, we found that the variables <code class="language-plaintext highlighter-rouge">'CLIMATE.REGION'</code> and <code class="language-plaintext highlighter-rouge">'CLIMATE.CATEGORY'</code> contributed very little to predicting customer base size. In contrast, certain values in <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, such as ‘severe weather’ and ‘intentional attack’, had higher importance. Notably, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code> had the highest importance, indicating that the model relied heavily on this feature when making splits.</p>
 
-<p>For the final model, we removed the two non-contributing features and added five more, bringing the total to seven features: <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'TOTAL.CUSTOMERS'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, <code class="language-plaintext highlighter-rouge">'POPULATION'</code>, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, and <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>.</p>
+<p>For the final model, we <strong>removed the two non-contributing features and added five more new features,</strong> bringing the total to seven features: <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, <code class="language-plaintext highlighter-rouge">'POPDEN_URBAN'</code>, <code class="language-plaintext highlighter-rouge">'TOTAL.CUSTOMERS'</code>, <code class="language-plaintext highlighter-rouge">'OUTAGE.DURATION'</code>, <code class="language-plaintext highlighter-rouge">'POPULATION'</code>, <code class="language-plaintext highlighter-rouge">'TOTAL.SALES'</code>, and <code class="language-plaintext highlighter-rouge">'DEMAND.LOSS.MW'</code>.</p>
 
 <p>The additional features included:</p>
 <ul>
@@ -481,7 +501,7 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
   <li>n_estimators’: 300</li>
 </ul>
 
-<p>However, when we looked at the classification report, we found that the F1-scores across all groups were lower compared to the default parameters:</p>
+<p>However, when we looked at the classification report, we found that the F1-scores across the report <strong>were lower compared to the default parameters</strong>:</p>
 
 <table>
   <thead>
@@ -623,26 +643,30 @@ The dropped columns include: <code class="language-plaintext highlighter-rouge">
 
 <p>The <strong>overall F1-Score improved to 0.80</strong>, reflecting an increase in accuracy across all customer base categories. Notably, the ‘Very Large Customer Base’ saw a significant improvement, with its <strong>F1-Score rising from 0.0 to 0.83</strong>. Despite the sample size being small (only 6 samples), the model performed much better due to the inclusion of more features, which allowed the ‘Very Large Customer Base’ to be more adequately represented.</p>
 
-<p>Additionally, the accuracy for other categories also showed improvement. For example, the ‘Small Customer Base’ now has an <strong>impressive F1-Score of 0.97</strong>, demonstrating that the model can effectively predict this category. These improvements suggest that with more features and better representation, the model has become more capable of distinguishing between the various customer base categories.</p>
+<p>Additionally, the accuracy for other categories also showed improvement. For example, the ‘Small Customer Base’ now has an <strong>impressive F1-Score of 0.97</strong>, demonstrating that the model can effectively predict this category.</p>
+
+<p>These improvements suggest that with more features and better representation, the model has become more capable of distinguishing between the various customer base categories.</p>
 
 <p>We can visualize the prediction accuracy in a confusion matrix:</p>
 <iframe src="assets/confusion_matrix.html" width="800" height="420" frameborder="0"></iframe>
 
 <h1 id="fairness-analysis">Fairness Analysis</h1>
 
-<p>Our groups to test the model’s fairness are whether the cause of the outage, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, was severe weather or not. We used the accuracy as the evaluation metric since it represents the proportion of correct predictions made for both groups. This metric suits the classification problem as we are trying to see whether the model is accurate in distinguishing between severe weather and other outage causes.</p>
+<p>Our groups to test the model’s fairness are whether the cause of the outage, <code class="language-plaintext highlighter-rouge">'CAUSE.CATEGORY'</code>, was <strong>system operability disruption</strong> or not. We used the accuracy as the evaluation metric since it represents the proportion of correct predictions made for both groups. This metric suits the classification problem as we are trying to see whether the model is accurate in distinguishing between severe weather and other outage causes.</p>
 
-<p>We decided to test the model’s fairness on these groups because we found that the false negative rates of outages caused by severe weather were the highest out of all the cause categories. This raised our concerns about whether the model was underperforming for this cause.</p>
+<p>We decided to test the model’s fairness on these groups because we found that the <strong>false negative rates of outages caused by system operability disruption were the highest out of all the cause categories.</strong> This raised our concerns about whether the model was underperforming for this cause.</p>
 
 <iframe src="assets/fnr_cause.html" width="800" height="420" frameborder="0"></iframe>
 
-<p><strong>Null Hypothesis:</strong> The model is fair. Its accuracy for severe weather and non-severe weather cases are roughly the same, and any differences are due to random chance.</p>
+<p><strong>Null Hypothesis:</strong> The model is fair. Its accuracy for system operability disruption and non-system operability disruption cases are roughly the same, and any differences are due to random chance.</p>
 
-<p><strong>Alternative Hypothesis:</strong> The model is unfair. Its accuracy for severe weather and non-severe weather cases are significantly different.</p>
+<p><strong>Alternative Hypothesis:</strong> The model is unfair. Its accuracy for system operability disruption and non-system operability disruption cases are significantly different.</p>
 
-<p><strong>Test Statistic:</strong> The difference in accuracy between “severe weather” and the rest of the categories.</p>
+<p><strong>Test Statistic:</strong> The difference in accuracy between “system operability disruption” and the rest of the categories.</p>
 
-<p>We performed a permutation test with 5000 trials where we repeatedly computed the difference in accuracy between “severe weather” and the rest of the categories, “other”. Our observed value was -0.278 difference and we got a p-value of 0.0, which is significant using a standard significant level of 0.05. This means <strong>we reject our null hypothesis that our model is completely fair.</strong> The results suggest that our model may show different levels of accuracy depending on whether the power outage is caused by severe weather. Specifically, severe weather appears to be associated with lower accuracy compared to other causes, as indicated by the negative difference in accuracy.</p>
+<p>We conducted a permutation test with 5,000 trials to assess whether the accuracy of our model differs when predicting power outages caused by “system operability disruption” compared to all other causes. Our observed accuracy difference was -0.21, and we obtained a p-value of 0.079. Since this p-value exceeds the standard significance threshold of 0.05, we <strong>fail to reject the null hypothesis.</strong></p>
+
+<p>These results suggest that the observed lower accuracy for system operability disruption is not statistically significant and <strong>may be due to random variation rather than a true effect.</strong> While there appears to be an association between system operability disruption and reduced accuracy, the evidence is insufficient to conclude that this difference is meaningful.</p>
 
 <iframe src="assets/fairness_perm.html" width="800" height="420" frameborder="0"></iframe>
 </div>
